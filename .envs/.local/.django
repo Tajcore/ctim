@@ -1,0 +1,15 @@
+# General
+# ------------------------------------------------------------------------------
+USE_DOCKER=yes
+IPYTHONDIR=/app/.ipython
+
+DJANGO_ALLOWED_HOSTS=api.thompson.gr,localhost,0.0.0.0,127.0.0.1
+
+# Sentry
+# ------------------------------------------------------------------------------
+SENTRY_DSN=https://5664cd4f5015bb2db01333c158277386@o4506449034477568.ingest.sentry.io/4506449036967936
+SENTRY_TRACES_SAMPLE_RATE=1.0
+
+
+CLIENT_SECRET=gbmy7NXG1PDPvW2x4dHyFFNnQ0i22T6axX6yEaeF9wndclejYHQWdAwcEgEYeyR7dmy07lzFfM1SkjmyetGloRvjTADOx2k8rn4tdNomVPvaw6hnYdMj7m7iNuCo7SlP
+CLIENT_ID=Aru35B2NfM5EI4mpyWOkoxnN1k10Wamy3lTI7GMX
