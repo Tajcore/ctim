@@ -336,4 +336,5 @@ sentry_sdk.init(
 # CTIM/CTIA settings
 # ------------------------------------------------------------------------------
 # Default URL for the JSON file (initially for ctia's get_ransonware_groups command)
-DEFAULT_JSON_FILE_URL = "https://raw.githubusercontent.com/thompsonson/ransomware.live/main/groups.json"
+DEFAULT_RANSOMWARE_GROUPS_JSON = "https://raw.githubusercontent.com/thompsonson/ransomware.live/main/groups.json"
+DEFAULT_RANSOMWARE_POSTS_JSON = "https://raw.githubusercontent.com/thompsonson/ransomware.live/main/posts.json"

@@ -1,0 +1,213 @@
+openapi: 3.0.3
+info:
+  title: Cyber Threat Intelligence Management API
+  version: 1.0.0
+  description: Documentation of API endpoints of Cyber Threat Intelligence Management
+servers:
+  - url: https://api.thompson.gr
+paths:
+  /ctia/groups/:
+    get:
+      summary: Retrieve a count and list of ThreatActors with pagination
+      operationId: ctia_groups_list
+      tags:
+        - ctia
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: Filter groups by name
+          required: false
+      security:
+        - cookieAuth: []
+        - tokenAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Group"
+          description: ""
+  /ctia/groups/{id}/:
+    get:
+      summary: Get details of a ThreatActor by ID
+      operationId: ctia_groups_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this group.
+          required: true
+      tags:
+        - ctia
+      security:
+        - cookieAuth: []
+        - tokenAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+          description: ""
+  /ctia/posts/{id}:
+    get:
+      summary: Get post details by ID
+      operationId: ctia_posts_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Unique identifier of the post
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 3406
+                  title:
+                    type: string
+                    example: Torin Drive
+                  discovered:
+                    type: string
+                    format: datetime
+                    example: 2022-08-28T20:49:12.838284Z
+                  description:
+                    type: string
+                    example: Detailed description of Torin Drive...
+                  website:
+                    type: string
+                    format: uri
+                    example: http://www.torindrive.com/
+                  published:
+                    type: string
+                    format: datetime
+                    example: 2022-08-28T20:49:12.838284Z
+                  url:
+                    type: string
+                    example: ""
+                  country:
+                    type: string
+                    example: ""
+                  group:
+                    type: integer
+                    example: 63
+  /ctia/posts/:
+    get:
+      summary: Retrieve a list of posts
+      operationId: ctia_posts_list
+      parameters:
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+          description: Page number for pagination of results.
+        - in: query
+          name: group
+          required: false
+          schema:
+            type: integer
+          description: Filter posts by a specific threat actor group ID.
+        - in: query
+          name: country
+          required: false
+          schema:
+            type: string
+          description: Filter posts by country.
+        - in: query
+          name: title
+          required: false
+          schema:
+            type: string
+          description: Filter posts by title.
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 100
+                  next:
+                    type: string
+                    format: uri
+                    example: http://api.thompson.gr/ctia/posts/?page=2
+                  previous:
+                    type: string
+                    format: uri
+                    example: null
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3406
+                        title:
+                          type: string
+                          example: Example Post Title
+                        discovered:
+                          type: string
+                          format: datetime
+                          example: 2023-01-01T00:00:00Z
+                        description:
+                          type: string
+                          example: Brief description of the post content...
+                        website:
+                          type: string
+                          format: uri
+                          example: http://www.examplewebsite.com/
+                        published:
+                          type: string
+                          format: datetime
+                          example: 2023-01-01T00:00:00Z
+                        url:
+                          type: string
+                          example: http://www.exampleposturl.com/
+                        country:
+                          type: string
+                          example: Example Country
+                        group:
+                          type: integer
+                          example: 63
+components:
+  schemas:
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        captcha:
+          type: boolean
+        parser:
+          type: boolean
+        javascript_render:
+          type: boolean
+        meta:
+          nullable: true
+        description:
+          type: string
+          nullable: true
+      required:
+        - id
+        - name

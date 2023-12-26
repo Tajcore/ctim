@@ -1,7 +1,19 @@
 # ctim/ctia/admin.py
 from django.contrib import admin
 
-from .models import Group, Location, Profile
+from .models import Group, Location, Post, Profile
+
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ("title", "group", "discovered", "published", "country")
+    search_fields = ("title", "group__name", "country")
+    list_filter = ("group", "country", "published")
+
+
+class PostInline(admin.TabularInline):
+    model = Post
+    extra = 1  # Number of empty forms to display
 
 
 @admin.register(Location)
@@ -43,4 +55,9 @@ class ProfileInline(admin.TabularInline):
 class GroupAdmin(admin.ModelAdmin):
     list_display = ("name", "captcha", "parser", "javascript_render", "description")
     search_fields = ("name",)
-    inlines = [LocationInline, ProfileInline]
+    inlines = [LocationInline, ProfileInline, PostInline]
+
+
+class GroupInline(admin.TabularInline):
+    model = Group
+    extra = 1

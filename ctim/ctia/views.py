@@ -4,8 +4,14 @@ from drf_spectacular.generators import SchemaGenerator
 from drf_spectacular.views import SpectacularAPIView
 from rest_framework import viewsets
 
-from .models import Group, Location, Profile
-from .serializers import GroupDetailSerializer, GroupListSerializer, LocationSerializer, ProfileSerializer
+from .models import Group, Location, Post, Profile
+from .serializers import (
+    GroupDetailSerializer,
+    GroupListSerializer,
+    LocationSerializer,
+    PostSerializer,
+    ProfileSerializer,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +48,12 @@ class CustomSchemaGenerator(SchemaGenerator):
         # Log the filtered endpoints at the debug level
         logger.debug(f"Filtered CTIA endpoints: {ctia_endpoints}")
         return ctia_endpoints
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all().order_by("-published")  # Order by 'published' in descending order
+    serializer_class = PostSerializer
+    filterset_fields = ["title", "group", "published"]
 
 
 class CustomSchemaView(SpectacularAPIView):

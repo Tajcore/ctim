@@ -14,14 +14,14 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    help = "Load data from JSON file into PostgreSQL database"
+    help = "Load Ransomware Group data from JSON file into PostgreSQL database"
 
     def add_arguments(self, parser):
         parser.add_argument(
             "json_file",
             type=str,
             nargs="?",  # Makes the argument optional
-            default=settings.DEFAULT_JSON_FILE_URL,
+            default=settings.DEFAULT_RANSOMWARE_GROUPS_JSON,
             help="The JSON file to parse or URL to fetch data from",
         )
 
