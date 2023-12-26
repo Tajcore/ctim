@@ -1,16 +1,14 @@
 """
 Base settings to build other settings files upon.
 """
+import logging
 from pathlib import Path
 
 import environ
-import logging
-
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import LoggingIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
-
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # ctim/
@@ -88,8 +86,8 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "drf_spectacular",
-    'oauth2_provider',
-    'django_filters',
+    "oauth2_provider",
+    "django_filters",
 ]
 
 LOCAL_APPS = [
@@ -149,7 +147,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "oauth2_provider.middleware.OAuth2TokenMiddleware", 
+    "oauth2_provider.middleware.OAuth2TokenMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
@@ -255,7 +253,7 @@ DJANGO_ADMIN_FORCE_ALLAUTH = env.bool("DJANGO_ADMIN_FORCE_ALLAUTH", default=Fals
 
 # django-allauth
 # ------------------------------------------------------------------------------
-ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_AUTHENTICATION_METHOD = "email"
@@ -284,11 +282,11 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
     ),
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
 }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
@@ -307,11 +305,10 @@ SPECTACULAR_SETTINGS = {
 
 OAUTH2_PROVIDER = {
     "PKCE_REQUIRED": False,
-
-    'SCOPES': {
-        'read': 'Read scope',
-        'write': 'Write scope',
-    }
+    "SCOPES": {
+        "read": "Read scope",
+        "write": "Write scope",
+    },
 }
 
 # Sentry
@@ -336,9 +333,7 @@ sentry_sdk.init(
 )
 
 
-
 # CTIM/CTIA settings
 # ------------------------------------------------------------------------------
 # Default URL for the JSON file (initially for ctia's get_ransonware_groups command)
-DEFAULT_JSON_FILE_URL = 'https://raw.githubusercontent.com/thompsonson/ransomware.live/main/groups.json'
-
+DEFAULT_JSON_FILE_URL = "https://raw.githubusercontent.com/thompsonson/ransomware.live/main/groups.json"

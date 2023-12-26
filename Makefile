@@ -14,6 +14,7 @@ help:
 	@echo "down      - Stop the Docker containers"
 	@echo "restart   - Restart the Docker containers"
 	@echo "logs      - Follow log output of the containers"
+	@echo "pre_comm  - Run the pre-commit script on staged files (without actually commiting)"
 	@echo "migrate   - Apply database migrations"
 	@echo "makemig   - Create new migrations based on models"
 	@echo "createsu  - Create a superuser"
@@ -41,6 +42,10 @@ restart:
 .PHONY: logs
 logs:
 	docker-compose -f local.yml logs -f
+
+.PHONY: pre_comm
+pre_comm:
+	bash .git/hooks/pre-commit
 
 .PHONY: migrate
 migrate:

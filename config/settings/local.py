@@ -14,8 +14,8 @@ SECRET_KEY = env(
 default_hosts = ["localhost", "0.0.0.0", "127.0.0.1"]
 
 # Pull ALLOWED_HOSTS from environment variable, fallback to default if not set
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=default_hosts)
-CSRF_TRUSTED_ORIGINS = ['https://api.thompson.gr']
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=default_hosts)
+CSRF_TRUSTED_ORIGINS = ["https://api.thompson.gr"]
 
 # CACHES
 # ------------------------------------------------------------------------------
@@ -67,47 +67,47 @@ INSTALLED_APPS += ["django_extensions"]  # noqa: F405
 
 # Logging configuration
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
+    "version": 1,
+    "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
             "format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s",
         },
     },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
         },
     },
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG",
     },
-    'loggers': {
-        '': {  # root logger
-            'handlers': ['console'],
-            'level': 'DEBUG',  # Set to 'INFO' in production
+    "loggers": {
+        "": {  # root logger
+            "handlers": ["console"],
+            "level": "DEBUG",  # Set to 'INFO' in production
         },
-        'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
+        "django": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": True,
         },
-        'django.server': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
+        "django.server": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": True,
         },
-        'oauth2_provider': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
+        "oauth2_provider": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": True,
         },
-        'debug_toolbar': {
-            'handlers': ['console'],
-            'level': 'CRITICAL',  # Only log errors and critical issues
-            'propagate': False,
+        "debug_toolbar": {
+            "handlers": ["console"],
+            "level": "CRITICAL",  # Only log errors and critical issues
+            "propagate": False,
         },
     },
 }

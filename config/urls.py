@@ -1,3 +1,4 @@
+from ctia.views import CustomSchemaView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -7,9 +8,7 @@ from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
-from rest_framework.permissions import AllowAny 
-from ctia.views import CustomSchemaView
-
+from rest_framework.permissions import AllowAny
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -19,14 +18,17 @@ urlpatterns = [
     # User management
     path("users/", include("ctim.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
-    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path("o/", include("oauth2_provider.urls", namespace="oauth2_provider")),
     # Your stuff: custom urls includes go here
-    path('ctia/', include('ctia.urls')),
+    path("ctia/", include("ctia.urls")),
     # Schema view
-    path('ctia/schema/', CustomSchemaView.as_view(permission_classes=[AllowAny]), name='schema'),
-
+    path("ctia/schema/", CustomSchemaView.as_view(permission_classes=[AllowAny]), name="schema"),
     # Optional: Swagger UI view
-    path('ctia/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema', permission_classes=[AllowAny]), name='swagger-ui'),
+    path(
+        "ctia/schema/swagger-ui/",
+        SpectacularSwaggerView.as_view(url_name="schema", permission_classes=[AllowAny]),
+        name="swagger-ui",
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     # Static file serving when using Gunicorn + Uvicorn for local web socket development

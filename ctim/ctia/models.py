@@ -10,8 +10,9 @@ class Group(models.Model):
     meta = models.JSONField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
+
 class Location(models.Model):
-    group = models.ForeignKey(Group, related_name='locations', on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, related_name="locations", on_delete=models.CASCADE)
     fqdn = models.CharField(max_length=1000)
     title = models.CharField(max_length=100, null=True)
     version = models.IntegerField()
@@ -22,7 +23,7 @@ class Location(models.Model):
     lastscrape = models.DateTimeField()
     enabled = models.BooleanField()
 
-class Profile(models.Model):
-    group = models.ForeignKey(Group, related_name='profiles', on_delete=models.CASCADE)
-    url = models.URLField(max_length=1000)
 
+class Profile(models.Model):
+    group = models.ForeignKey(Group, related_name="profiles", on_delete=models.CASCADE)
+    url = models.URLField(max_length=1000)
