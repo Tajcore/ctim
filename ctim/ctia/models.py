@@ -36,7 +36,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     discovered = models.DateTimeField()
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     website = models.URLField(max_length=1000)
     published = models.DateTimeField()
     url = models.URLField(max_length=1000)

@@ -45,7 +45,8 @@ logs:
 
 .PHONY: pre_comm
 pre_comm:
-	bash .git/hooks/pre-commit
+	# bash .git/hooks/pre-commit run --all-files
+	pre-commit run --all-files
 
 .PHONY: migrate
 migrate:
