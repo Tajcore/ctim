@@ -24,6 +24,10 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer" />
       <!-- Your stuff: Third-party CSS libraries go here -->
+      <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+            rel="stylesheet" />
       <!-- This file stores project-specific CSS -->
       <link href="{% static 'css/project.css' %}" rel="stylesheet" />
     {% endblock css %}
@@ -58,12 +62,12 @@
           <a class="navbar-brand" href="{% url 'home' %}">Cyber Threat Intelligence Management</a>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
+              <!--<li class="nav-item active">
                 <a class="nav-link" href="{% url 'home' %}">Home <span class="visually-hidden">(current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'about' %}">About</a>
-              </li>
+              </li>-->
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'users:detail' request.user.pk %}">{% translate "My Profile" %}</a>
@@ -102,7 +106,7 @@
         {% endfor %}
       {% endif %}
       {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
+        <p>Welcome to Cyber Threat Intelligence Management</p>
       {% endblock content %}
     </div>
     <!-- /container -->

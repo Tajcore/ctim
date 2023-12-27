@@ -1,5 +1,132 @@
 /* These styles are generated from project.scss. */
 
+
+/* Reset and base styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Open Sans', sans-serif; /* or any modern sans-serif font */
+}
+
+/* Navigation bar styles */
+.navbar {
+  background-color: #fff; /* or any other color */
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #333; /* or any color that matches your brand */
+}
+
+.nav-link {
+  color: #333; /* or any color that matches your brand */
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-item.active .nav-link {
+  color: #000; /* or a highlight color */
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: #333; /* or any color that matches your brand */
+  font-weight: 300;
+}
+
+p {
+  color: #666; /* or any color for readability */
+  line-height: 1.6;
+}
+
+/* Button styles */
+.btn {
+  border: none;
+  border-radius: 50px; /* rounded edges */
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #0056b3; /* primary color */
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #003d82; /* darker shade for hover state */
+}
+
+/* Utility classes */
+.mt-1 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 1rem; }
+.pt-1 { padding-top: 1rem; }
+.pb-1 { padding-bottom: 1rem; }
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 2rem; /* smaller padding on mobile */
+  }
+
+  .nav-link, .navbar-brand {
+    font-size: 14px; /* smaller font size on mobile */
+  }
+}
+
+/* Animations and transitions */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Container styles */
+.container {
+  max-width: 1140px; /* max container width */
+  margin: auto;
+  padding: 0 15px; /* padding on the sides */
+}
+
+/* Update to modern color palette */
+:root {
+  --primary-color: #0056b3; /* primary color */
+  --secondary-color: #6c757d; /* secondary color */
+  --background-color: #f8f9fa; /* background color */
+  --text-color: #333; /* text color */
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Additional container styling */
+.container {
+  padding: 2rem 1rem;
+}
+
+/* Footer styles if you have a footer */
+footer {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+/* Ensure consistent styling across browsers */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+
 .alert-debug {
   color: black;
   background-color: white;
@@ -10,4 +137,58 @@
   color: #b94a48;
   background-color: #f2dede;
   border-color: #eed3d7;
+}
+
+
+.socialaccount_providers li a {
+  display: inline-block;
+  margin-right: 10px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.socialaccount_providers li a i {
+  margin-right: 5px;
+}
+
+
+/* ... existing styles ... */
+
+.socialaccount_provider {
+  display: block;
+  margin-bottom: 10px;
+  padding: 12px 20px; /* Increase padding for better button size */
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  text-decoration: none; /* Remove underline from links */
+  font-size: 16px; /* Increase font size for better readability */
+}
+
+.socialaccount_provider.github {
+  background-color: #333;
+  color: #fff; /* Ensure text is white for readability */
+}
+
+.socialaccount_provider.google {
+  background-color: #DB4437;
+  color: #fff;
+}
+
+.socialaccount_provider.microsoft {
+  background-color: #00A1F1;
+  color: #fff;
+}
+
+.socialaccount_provider i {
+  margin-right: 10px;
+  color: inherit; /* Ensure icon inherits the color from the button */
+  font-size: 20px; /* Increase font size for icons */
+}
+
+/* Ensure the Font Awesome icon is displayed */
+.fab {
+  font-family: "Font Awesome 5 Brands"; /* This is assuming you're using Font Awesome 5 */
 }
