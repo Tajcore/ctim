@@ -1,0 +1,26 @@
+name: Update DO App Platform Configuration
+
+on:
+  push:
+    paths:
+      - './compose/test_integration/digitalocean/spec.yaml'
+
+jobs:
+  update-do-config:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install doctl
+        run: |
+          sudo snap install doctl
+
+      - name: Authenticate with Digital Ocean
+        run: |
+          doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Update App Platform config
+        run: |
+          doctl apps update <app-id> --spec path/to/compose/test_integration/digitalocean/spec.yaml
