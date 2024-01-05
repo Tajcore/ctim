@@ -37,13 +37,15 @@ class Command(BaseCommand):
                     data = json.load(file)
             for item in data:
                 try:
-                    group = Group.objects.create(
+                    group, created = Group.objects.update_or_create(
                         name=item["name"],
-                        captcha=item.get("captcha", False),
-                        parser=item.get("parser", False),
-                        javascript_render=item.get("javascript_render", False),
-                        meta=item.get("meta"),
-                        description=item.get("description"),
+                        defaults={
+                            "captcha": item.get("captcha", False),
+                            "parser": item.get("parser", False),
+                            "javascript_render": item.get("javascript_render", False),
+                            "meta": item.get("meta"),
+                            "description": item.get("description"),
+                        },
                     )
                     self.load_locations(group, item.get("locations", []))
                     self.load_profiles(group, item.get("profile", []))
@@ -56,17 +58,19 @@ class Command(BaseCommand):
     def load_locations(self, group, locations):
         for location in locations:
             try:
-                Location.objects.create(
+                Location.objects.update_or_create(
                     group=group,
                     fqdn=location["fqdn"],
-                    title=location.get("title", "Default Title"),  # Provide a default value if title is None
-                    version=location["version"],
-                    slug=location["slug"],
-                    available=location["available"],
-                    delay=location.get("delay"),
-                    updated=self.parse_datetime(location.get("updated")),
-                    lastscrape=self.parse_datetime(location.get("lastscrape")),
-                    enabled=location["enabled"],
+                    defaults={
+                        "title": location.get("title", "Default Title"),
+                        "version": location["version"],
+                        "slug": location["slug"],
+                        "available": location["available"],
+                        "delay": location.get("delay"),
+                        "updated": self.parse_datetime(location.get("updated")),
+                        "lastscrape": self.parse_datetime(location.get("lastscrape")),
+                        "enabled": location["enabled"],
+                    },
                 )
             except IntegrityError as e:
                 logger.error(f"Error saving location for group {group.name}: {e}")
@@ -78,6 +82,6 @@ class Command(BaseCommand):
     def load_profiles(self, group, profiles):
         for profile_url in profiles:
             try:
-                Profile.objects.create(group=group, url=profile_url)
+                Profile.objects.update_or_create(group=group, url=profile_url)
             except IntegrityError as e:
                 logger.error(f"Error saving profile for group {group.name}: {e}")

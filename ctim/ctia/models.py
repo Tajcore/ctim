@@ -22,7 +22,7 @@ class Location(models.Model):
     slug = models.URLField()
     available = models.BooleanField()
     delay = models.FloatField(null=True, blank=True)
-    updated = models.DateTimeField()
+    updated = models.DateTimeField(null=True, blank=True)
     lastscrape = models.DateTimeField()
     enabled = models.BooleanField()
 
@@ -37,7 +37,7 @@ class Post(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     discovered = models.DateTimeField()
     description = models.TextField(null=True, blank=True)
-    website = models.URLField(max_length=1000)
+    website = models.URLField(null=True, max_length=1000)
     published = models.DateTimeField()
     url = models.URLField(max_length=1000)
     country = models.CharField(max_length=100)

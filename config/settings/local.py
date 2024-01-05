@@ -75,37 +75,40 @@ LOGGING = {
         },
     },
     "handlers": {
+        "sentry": {
+            "level": "INFO",  # Adjust the level as needed
+            "class": "sentry_sdk.integrations.logging.EventHandler",
+        },
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
         },
-    },
-    "root": {
-        "handlers": ["console"],
-        "level": "DEBUG",
+        "null": {
+            "class": "logging.NullHandler",
+        },
     },
     "loggers": {
         "": {  # root logger
             "handlers": ["console"],
-            "level": "DEBUG",  # Set to 'INFO' in production
+            "level": "INFO",  # Set to 'INFO' in production
         },
         "django": {
             "handlers": ["console"],
-            "level": "DEBUG",
+            "level": "CRITICAL",
             "propagate": True,
         },
         "django.server": {
             "handlers": ["console"],
-            "level": "DEBUG",
+            "level": "CRITICAL",
             "propagate": True,
         },
         "oauth2_provider": {
-            "handlers": ["console"],
-            "level": "DEBUG",
+            "handlers": ["sentry"],
+            "level": "INFO",
             "propagate": True,
         },
         "debug_toolbar": {
-            "handlers": ["console"],
+            "handlers": ["null"],
             "level": "CRITICAL",  # Only log errors and critical issues
             "propagate": False,
         },

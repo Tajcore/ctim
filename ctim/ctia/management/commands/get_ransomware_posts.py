@@ -38,22 +38,19 @@ class Command(BaseCommand):
             for item in data:
                 try:
                     group_name = item["group_name"]
-                    groups = Group.objects.filter(name=group_name)
+                    group, _ = Group.objects.get_or_create(name=group_name)
 
-                    if not groups.exists():
-                        group = Group.objects.create(name=group_name)
-                    else:
-                        group = groups.first()  # Take the first one if multiple groups are found
-
-                    Post.objects.create(
+                    Post.objects.update_or_create(
                         title=item["post_title"],
-                        group=group,
-                        discovered=self.parse_datetime(item["discovered"]),
-                        description=item.get("description", None),
-                        website=item.get("website", None),
-                        published=self.parse_datetime(item["published"]),
                         url=item["post_url"],
-                        country=item["country"],
+                        defaults={
+                            "group": group,
+                            "discovered": self.parse_datetime(item["discovered"]),
+                            "description": item.get("description", None),
+                            "website": item.get("website", None),
+                            "published": self.parse_datetime(item["published"]),
+                            "country": item["country"],
+                        },
                     )
                 except IntegrityError as e:
                     logger.error(f"Error saving post {item['post_title']}: {e}")
