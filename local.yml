@@ -16,8 +16,7 @@ services:
     volumes:
       - .:/app:z
     env_file:
-      - ./.envs/.local/.django
-      - ./.envs/.local/.postgres
+      - .envrc_local
     ports:
       - '8000:8000'
     command: /start

@@ -3,7 +3,7 @@ name: Update DO App Platform Configuration
 on:
   push:
     paths:
-      - './compose/test_integration/digitalocean/spec.yaml'
+      - 'compose/test_integration/digitalocean/spec.yaml'
 
 jobs:
   update-do-config:
@@ -23,4 +23,4 @@ jobs:
 
       - name: Update App Platform config
         run: |
-          doctl apps update <app-id> --spec path/to/compose/test_integration/digitalocean/spec.yaml
+          doctl apps update cd5fd967-97e8-4fff-a233-8d826d8dc434 --spec compose/test_integration/digitalocean/spec.yaml

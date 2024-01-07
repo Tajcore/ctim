@@ -1,27 +1,76 @@
-name: my-app
-region: fra1
+alerts:
+- rule: DEPLOYMENT_FAILED
+- rule: DOMAIN_FAILED
+domains:
+- domain: ctia.agentia.tech
+  type: PRIMARY
+- domain: ctia.thompson.gr
+  type: ALIAS
+envs:
+- key: POSTGRES_HOST
+  scope: RUN_AND_BUILD_TIME
+  type: SECRET
+  value: EV[1:+j4tIbTRwJ08lkIBnBTAenylYtot4wuK:gz/VMYaRapLjjk0t9HBmwXGrpqPOv3sDmUTbC1tBl7mMXHdwghsWRcfnFrWBqFnccrix9oYRaiIP3qiaxhF6uWzqnJK98NMx3xV7GBYrNBw7mDnNJ6ov3b3g/Mc=]
+- key: POSTGRES_PORT
+  scope: RUN_AND_BUILD_TIME
+  value: "25060"
+- key: POSTGRES_DB
+  scope: RUN_AND_BUILD_TIME
+  value: ctia
+- key: POSTGRES_USER
+  scope: RUN_AND_BUILD_TIME
+  value: ctia-app
+- key: POSTGRES_PASSWORD
+  scope: RUN_AND_BUILD_TIME
+  type: SECRET
+  value: EV[1:BPRtEU/HYxaYWCEm/O5vAx9CR4F33BLW:POsDegNmpjTgiNx3sWlC7KspIPrSMoHNlTCKObHsoUwcsXW6I1HCLg==]
+- key: DJANGO_USE_LOCAL_ENV
+  scope: RUN_AND_BUILD_TIME
+  value: "True"
+- key: USE_DOCKER
+  scope: RUN_AND_BUILD_TIME
+  value: "yes"
+- key: IPYTHONDIR
+  scope: RUN_AND_BUILD_TIME
+  value: /app/.ipython
+- key: DJANGO_ALLOWED_HOSTS
+  scope: RUN_AND_BUILD_TIME
+  value: ctia-app-guimy.ondigitalocean.app,api.thompson.gr,ctia.thompson.gr,ctia.agentia.tech
+- key: SENTRY_DSN
+  scope: RUN_AND_BUILD_TIME
+  type: SECRET
+  value: EV[1:l7wZk9LoKVrPGLZA8bNaKwhG9laU+is3:nBtfQkalxHkTHCvGWApx85Bpf50MALtMekuZjj00CgjpuZe7vGpXnPiJnnMAfzbC/fCCFj7Qq1UgAyag2fWTfOUdldfgmwKlXZCi/vk5tPk8ppHvfCYGKAK1bTwYvf6wPGs+msPjq4eqNr9X]
+- key: SENTRY_TRACES_SAMPLE_RATE
+  scope: RUN_AND_BUILD_TIME
+  value: "1.0"
+- key: SENTRY_ENVIRONMENT
+  scope: RUN_AND_BUILD_TIME
+  value: test_integration
+- key: DATABASE_URL
+  scope: RUN_AND_BUILD_TIME
+  type: SECRET
+  value: EV[1:PRtd8kZOB1vlxtYMyuxAi74E4qVaO1Zu:GMdkF5YKJJz+KOkmCT712Pg57QEHRoQETDUM6eam2ijRYfOvDtW0cmTPN7mPl4E/+i0wr/UD310ORtHTrBM+LJ0NbLODFuBNS7A798eWkSO11Qij+mNeKJWHf14EKekA+nbns1nPAZkNtRsP/YvKpzqO6PsgBmmkF5zcz3Xbbl3BxyBYIJEq/MUijJVeXnb5ClrqAg==]
+features:
+- buildpack-stack=ubuntu-22
+ingress:
+  rules:
+  - component:
+      name: ctia-app
+    match:
+      path:
+        prefix: /
+name: ctia-app
+region: fra
 services:
-  - name: django-app
-    github:
-      repo: your-github-username/your-repo-name
-      branch: main
-      deploy_on_push: true
-    environment_slug: python
-    build_command: "docker build -t my-django-app -f ./compose/test_integration/django/Dockerfile ."
-    run_command: "/start"
-    http_port: 8000
-    instance_size_slug: basic-xxs
-    instance_count: 1
-    envs:
-      # Define necessary environment variables here
-
-databases:
-  - name: ctim-int-db-postgresql-fra1-08372
-    engine: pg
-    version: "15"
-    size: db-s-1vcpu-1gb
-    region: fra1
-    num_nodes: 1
-    tags:
-      - test_env
-      - integration
+- health_check: {}
+  http_port: 8000
+  image:
+    deploy_on_push:
+      enabled: true
+    registry_type: DOCR
+    repository: ctia-app
+    tag: latest
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  name: ctia-app
+  run_command: /start

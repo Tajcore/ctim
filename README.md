@@ -59,3 +59,19 @@ The following details how to deploy this application.
 ### Docker
 
 See detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).
+
+
+### Postgres on Digital Ocean
+
+Create the user
+
+```
+doctl databases user create d2928083-d8e9-4947-9a49-fae054e86f87 ctia-app
+```
+
+Log on to the server (get the URI and doadmin password from Digital Oceans Web UI)
+```
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "ctia-app";
+GRANT ALL PRIVILEGES ON DATABASE ctia TO "ctia-app";
+GRANT ALL PRIVILEGES ON SCHEMA public TO "ctia-app";
+```

@@ -2,8 +2,10 @@
 Base settings to build other settings files upon.
 """
 import logging
+import os
 from pathlib import Path
 
+import dj_database_url
 import environ
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -19,6 +21,9 @@ READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(BASE_DIR / ".env"))
+
+# Use the os module to read environment variables directly
+USE_LOCAL_ENV = os.getenv("DJANGO_USE_LOCAL_ENV", "False").lower() == "true"
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -50,8 +55,18 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {"default": env.db("DATABASE_URL")}
-DATABASES["default"]["ATOMIC_REQUESTS"] = True
+if USE_LOCAL_ENV:
+    DATABASE_URL = os.getenv("DATABASE_URL")
+else:
+    DATABASE_URL = env.db("DATABASE_URL")
+
+# Parse the DATABASE_URL to get a configuration dictionary
+parsed_config = dj_database_url.parse(DATABASE_URL)
+
+# Assign the parsed configuration to DATABASES setting
+DATABASES = {"default": parsed_config}
+DATABASES["default"]["ATOMIC_REQUESTS"] = True  # Ensure ATOMIC_REQUESTS is set
+
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -313,18 +328,25 @@ OAUTH2_PROVIDER = {
 
 # Sentry
 # ------------------------------------------------------------------------------
-SENTRY_DSN = env("SENTRY_DSN")
-SENTRY_LOG_LEVEL = env.int("DJANGO_SENTRY_LOG_LEVEL", logging.INFO)
+if USE_LOCAL_ENV:
+    SENTRY_DSN = os.getenv("SENTRY_DSN")
+    SENTRY_LOG_LEVEL = int(os.getenv("DJANGO_SENTRY_LOG_LEVEL", logging.INFO))
+    SENTRY_ENVIRONMENT = os.getenv("SENTRY_ENVIRONMENT")
+else:
+    SENTRY_DSN = env("SENTRY_DSN")
+    SENTRY_LOG_LEVEL = env.int("DJANGO_SENTRY_LOG_LEVEL", logging.INFO)
+    SENTRY_ENVIRONMENT = env("SENTRY_ENVIRONMENT", default="local")
 
 sentry_logging = LoggingIntegration(
     level=SENTRY_LOG_LEVEL,  # Capture info and above as breadcrumbs
     event_level=logging.ERROR,  # Send errors as events
 )
 integrations = [sentry_logging, DjangoIntegration(), RedisIntegration()]
+
 sentry_sdk.init(
     dsn=SENTRY_DSN,
     integrations=integrations,
-    environment=env("SENTRY_ENVIRONMENT", default="local"),
+    environment=SENTRY_ENVIRONMENT,
     traces_sample_rate=env.float("SENTRY_TRACES_SAMPLE_RATE", default=0.0),
     # Set profiles_sample_rate to 1.0 to profile 100%
     # of sampled transactions.

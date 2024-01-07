@@ -278,3 +278,5 @@ ctim/media/
 .env
 .envs/*
 !.envs/.local/
+
+.envrc_local
