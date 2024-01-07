@@ -31,7 +31,7 @@ services:
       - ctim_local_postgres_data:/var/lib/postgresql/data
       - ctim_local_postgres_data_backups:/backups
     env_file:
-      - ./.envs/.local/.postgres
+      - .envrc_local
 
   docs:
     image: ctim_local_docs
@@ -40,7 +40,7 @@ services:
       context: .
       dockerfile: ./compose/local/docs/Dockerfile
     env_file:
-      - ./.envs/.local/.django
+      - .envrc_local
     volumes:
       - ./docs:/docs:z
       - ./config:/app/config:z

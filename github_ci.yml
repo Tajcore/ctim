@@ -1,0 +1,75 @@
+version: '3'
+
+volumes:
+  ctim_local_postgres_data: {}
+  ctim_local_postgres_data_backups: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: ctim_local_django
+    container_name: ctim_local_django
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app:z
+    environment:
+      - DJANGO_ALLOWED_HOSTS=$DJANGO_ALLOWED_HOSTS
+      - POSTGRES_HOST=$POSTGRES_HOST
+      - POSTGRES_PORT=$POSTGRES_PORT
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - DATABASE_URL=$DATABASE_URL
+      - SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
+      - SENTRY_DSN=$SENTRY_DSN
+      - SENTRY_TRACES_SAMPLE_RATE=$SENTRY_TRACES_SAMPLE_RATE
+      - USE_DOCKER=yes
+      - IPYTHONDIR=/app/.ipython
+    ports:
+      - '8000:8000'
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: ctim_production_postgres
+    container_name: ctim_local_postgres
+    volumes:
+      - ctim_local_postgres_data:/var/lib/postgresql/data
+      - ctim_local_postgres_data_backups:/backups
+    environment:
+      - POSTGRES_HOST=$POSTGRES_HOST
+      - POSTGRES_PORT=$POSTGRES_PORT
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - DATABASE_URL=$DATABASE_URL
+      - USE_DOCKER=yes
+
+  docs:
+    image: ctim_local_docs
+    container_name: ctim_local_docs
+    build:
+      context: .
+      dockerfile: ./compose/local/docs/Dockerfile
+    environment:
+      - DJANGO_ALLOWED_HOSTS=$DJANGO_ALLOWED_HOSTS
+      - POSTGRES_HOST=$POSTGRES_HOST
+      - POSTGRES_PORT=$POSTGRES_PORT
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - DATABASE_URL=$DATABASE_URL
+      - USE_DOCKER=yes
+      - IPYTHONDIR=/app/.ipython
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./ctim:/app/ctim:z
+    ports:
+      - '9000:9000'
+    command: /start-docs
