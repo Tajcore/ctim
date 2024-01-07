@@ -1,4 +1,4 @@
-# ctim/ctia/models.py
+# ctim/ctia/models/ransomware.py
 from django.db import models
 
 

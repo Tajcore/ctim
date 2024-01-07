@@ -1,7 +1,7 @@
 # ctim/ctia/admin.py
 from django.contrib import admin
 
-from .models import Group, Location, Post, Profile
+from ctim.ctia.models.ransomware import Group, Location, Post, Profile
 
 
 @admin.register(Post)

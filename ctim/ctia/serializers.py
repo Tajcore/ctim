@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Group, Location, Post, Profile
+from ctim.ctia.models.ransomware import Group, Location, Post, Profile
 
 
 class GroupListSerializer(serializers.ModelSerializer):
