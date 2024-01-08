@@ -27,3 +27,8 @@ drf-spectacular==0.27.0  # https://github.com/tfranzel/drf-spectacular
 django-oauth-toolkit # https://github.com/jazzband/django-oauth-toolkit
 django-filter
 dj_database_url
+
+
+# for telegram features
+# ------------------------------------------------------------------------------
+telethon

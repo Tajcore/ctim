@@ -2,6 +2,7 @@
 from django.contrib import admin
 
 from ctim.ctia.models.ransomware import Group, Location, Post, Profile
+from ctim.ctia.models.telegram import Channel, ChannelPost
 
 
 @admin.register(Post)
@@ -61,3 +62,16 @@ class GroupAdmin(admin.ModelAdmin):
 class GroupInline(admin.TabularInline):
     model = Group
     extra = 1
+
+
+@admin.register(Channel)
+class ChannelAdmin(admin.ModelAdmin):
+    list_display = ("name", "url", "description")
+    search_fields = ("name",)
+
+
+@admin.register(ChannelPost)
+class ChannelPostAdmin(admin.ModelAdmin):
+    list_display = ("message_id", "content", "date_posted", "channel")
+    list_filter = ("date_posted", "channel")
+    search_fields = ("content",)

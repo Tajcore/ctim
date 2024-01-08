@@ -1,4 +1,6 @@
 # ctim/ctia/models/telegram.py
+import json  # For storing JSON data
+
 from django.db import connection, models
 from django.db.models import JSONField
 
@@ -24,6 +26,31 @@ class Channel(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ChannelPost(models.Model):
+    channel = models.ForeignKey(Channel, related_name="posts", on_delete=models.CASCADE)  # Link to Channel model
+    message_id = models.BigIntegerField(unique=True)  # Unique ID of the message in the channel
+    content = models.TextField()
+    date_posted = models.DateTimeField()
+    edit_date = models.DateTimeField(null=True, blank=True)
+    views = models.IntegerField(null=True, blank=True)
+    forwards = models.IntegerField(null=True, blank=True)
+    reply_count = models.IntegerField(default=0)
+    media_json = models.JSONField(null=True, blank=True)  # Store media information as JSON
+    entities_json = models.JSONField(null=True, blank=True)  # Store entities as JSON
+    message_url = models.URLField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Channel Post {self.message_id} in Channel {self.channel_id}"
+
+    @property
+    def entities(self):
+        return json.loads(self.entities_json) if self.entities_json else None
+
+    @property
+    def media(self):
+        return json.loads(self.media_json) if self.media_json else None
 
 
 class Adjacency(models.Model):

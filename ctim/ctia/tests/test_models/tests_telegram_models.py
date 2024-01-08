@@ -2,7 +2,7 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from ctim.ctia.models.telegram import Adjacency, Channel, Media, Message, UserProfile
+from ctim.ctia.models.telegram import Adjacency, Channel, ChannelPost, Media, Message, UserProfile
 
 
 class UserProfileModelTest(TestCase):
@@ -101,3 +101,37 @@ class MediaModelTest(TestCase):
     def test_media_creation(self):
         self.assertEqual(self.media.message, self.message)
         # Test for media_file if applicable
+
+
+class ChannelPostModelTest(TestCase):
+    def setUp(self):
+        self.channel = Channel.objects.create(
+            name="Test Channel",
+            description="A test channel",
+            url="http://example.com/channel",
+            source_urls="http://source1.com, http://source2.com",
+        )
+        self.channel_post = ChannelPost.objects.create(
+            channel=self.channel,
+            message_id=123456789,
+            content="Test Post Content",
+            date_posted=timezone.now(),
+            views=100,
+            forwards=10,
+            reply_count=5,
+            media_json={"type": "photo", "url": "http://example.com/photo.jpg"},
+            entities_json=[{"type": "url", "offset": 10, "length": 20}],
+            message_url="http://example.com/post/123456789",
+        )
+
+    def test_channel_post_creation(self):
+        self.assertEqual(self.channel_post.channel, self.channel)
+        self.assertEqual(self.channel_post.message_id, 123456789)
+        self.assertEqual(self.channel_post.content, "Test Post Content")
+        self.assertIsNotNone(self.channel_post.date_posted)
+        self.assertEqual(self.channel_post.views, 100)
+        self.assertEqual(self.channel_post.forwards, 10)
+        self.assertEqual(self.channel_post.reply_count, 5)
+        self.assertEqual(self.channel_post.media_json, {"type": "photo", "url": "http://example.com/photo.jpg"})
+        self.assertEqual(self.channel_post.entities_json, [{"type": "url", "offset": 10, "length": 20}])
+        self.assertEqual(self.channel_post.message_url, "http://example.com/post/123456789")
