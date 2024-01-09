@@ -114,4 +114,9 @@ LOGGING = {
         },
     },
 }
-# ... any other settings you may have ...
+
+
+# Celery
+# ------------------------------------------------------------------------------
+# https://docs.celeryq.dev/en/stable/userguide/configuration.html#task-eager-propagates
+CELERY_TASK_EAGER_PROPAGATES = True
