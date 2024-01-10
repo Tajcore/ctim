@@ -1,4 +1,3 @@
-from ctia.views import CustomSchemaView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -10,6 +9,8 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.permissions import AllowAny
 
+from ctim.ctia.views import CustomSchemaView
+
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
@@ -20,7 +21,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("o/", include("oauth2_provider.urls", namespace="oauth2_provider")),
     # Your stuff: custom urls includes go here
-    path("ctia/", include("ctia.urls")),
+    path("ctia/", include("ctim.ctia.urls")),
     # Schema view
     path("ctia/schema/", CustomSchemaView.as_view(permission_classes=[AllowAny]), name="schema"),
     # Optional: Swagger UI view

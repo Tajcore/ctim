@@ -76,7 +76,7 @@ LOGGING = {
     },
     "handlers": {
         "sentry": {
-            "level": "INFO",  # Adjust the level as needed
+            "level": "INFO",
             "class": "sentry_sdk.integrations.logging.EventHandler",
         },
         "console": {
@@ -111,6 +111,11 @@ LOGGING = {
             "handlers": ["null"],
             "level": "CRITICAL",  # Only log errors and critical issues
             "propagate": False,
+        },
+        "ctim.ctia.tasks": {
+            "handlers": ["null"],  # set to null as the celeery handler picks it up
+            "level": "DEBUG",
+            "propagate": True,
         },
     },
 }

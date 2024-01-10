@@ -1,8 +1,9 @@
 # ctim/ctia/models/telegram.py
 import json  # For storing JSON data
 
+from asgiref.sync import sync_to_async
 from django.db import connection, models
-from django.db.models import JSONField
+from django.db.models import JSONField, Max
 
 
 class UserProfile(models.Model):
@@ -20,9 +21,21 @@ class Channel(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     url = models.URLField()
-    members = models.ManyToManyField(UserProfile, related_name="channels")
-    source_urls = models.TextField(help_text="Comma-separated list of source URLs")
+    members = models.ManyToManyField(UserProfile, related_name="channels", blank=True)
+    source_urls = models.TextField(help_text="Comma-separated list of source URLs", blank=True, null=True)
     metadata = JSONField(blank=True, null=True)  # Flexible storage for additional channel attributes
+    is_being_processed = models.BooleanField(default=False)
+
+    @property
+    def last_processed_message_id(self):
+        return ChannelPost.objects.filter(channel=self).aggregate(Max("message_id")).get("message_id__max") or 0
+
+    async def last_processed_message_id_async(self):
+        return await self._get_last_processed_message_id_async()
+
+    @sync_to_async
+    def _get_last_processed_message_id_async(self):
+        return ChannelPost.objects.filter(channel=self).aggregate(Max("message_id")).get("message_id__max") or 0
 
     def __str__(self):
         return self.name
@@ -30,7 +43,7 @@ class Channel(models.Model):
 
 class ChannelPost(models.Model):
     channel = models.ForeignKey(Channel, related_name="posts", on_delete=models.CASCADE)  # Link to Channel model
-    message_id = models.BigIntegerField(unique=True)  # Unique ID of the message in the channel
+    message_id = models.BigIntegerField()  # Unique ID of the message in the channel (see Meta Class)
     content = models.TextField()
     date_posted = models.DateTimeField()
     edit_date = models.DateTimeField(null=True, blank=True)
@@ -45,12 +58,37 @@ class ChannelPost(models.Model):
         return f"Channel Post {self.message_id} in Channel {self.channel_id}"
 
     @property
-    def entities(self):
-        return json.loads(self.entities_json) if self.entities_json else None
+    def media(self):
+        if isinstance(self.media_json, str):
+            return json.loads(self.media_json)
+        return self.media_json
 
     @property
-    def media(self):
-        return json.loads(self.media_json) if self.media_json else None
+    def entities(self):
+        if isinstance(self.entities_json, str):
+            return json.loads(self.entities_json)
+        return self.entities_json
+
+    class Meta:
+        unique_together = ("channel", "message_id")
+
+
+class FailedChannelPost(models.Model):
+    channel_post_data = models.JSONField()  # Store the data of the failed ChannelPost
+    error_message = models.TextField()  # Store the error message or details
+    retry_count = models.IntegerField(default=0)  # Number of retry attempts
+    last_attempt_time = models.DateTimeField(auto_now=True)  # Timestamp of the last retry attempt
+
+    def __str__(self):
+        channel_post_dict = self.channel_post_data
+        # Ensure it's a dictionary
+        if isinstance(self.channel_post_data, str):
+            try:
+                channel_post_dict = json.loads(self.channel_post_data)
+            except json.JSONDecodeError:
+                channel_post_dict = {}
+
+        return f"Failed Post {channel_post_dict.get('message_id', 'Unknown')}"
 
 
 class Adjacency(models.Model):

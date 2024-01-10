@@ -398,8 +398,11 @@ sentry_sdk.init(
     profiles_sample_rate=1.0,
 )
 
-
+# ------------------------------------------------------------------------------
 # CTIM/CTIA settings
+# ------------------------------------------------------------------------------
+
+# Ransomware settings
 # ------------------------------------------------------------------------------
 # Default URL for the JSON file (initially for ctia's get_ransomware_groups command)
 DEFAULT_RANSOMWARE_GROUPS_JSON = "https://raw.githubusercontent.com/thompsonson/ransomware.live/main/groups.json"
@@ -417,3 +420,4 @@ else:
     TELEGRAM_API_ID = env.db("TELEGRAM_API_ID")
     TELEGRAM_API_HASH = env.db("TELEGRAM_API_HASH")
     TELEGRAM_PHONE = env.db("TELEGRAM_PHONE")
+TELEGRAM_BATCH_SIZE = 20
