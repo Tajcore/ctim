@@ -2,6 +2,13 @@
 
 
 
+## v0.1.1 (2024-01-15)
+
+### Fix
+
+* fix(platform): corrected the command to run the tests in the CI ([`93ddc1d`](https://github.com/thompsonson/ctim/commit/93ddc1d59e9ef5a9862b527f639cb7b6a6f49d60))
+
+
 ## v0.1.0 (2024-01-15)
 
 ### Chore
