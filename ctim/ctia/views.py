@@ -4,8 +4,8 @@ from drf_spectacular.generators import SchemaGenerator
 from drf_spectacular.views import SpectacularAPIView
 from rest_framework import viewsets
 
-from .models import Group, Location, Post, Profile
-from .serializers import (
+from ctim.ctia.models import Group, Location, Post, Profile
+from ctim.ctia.serializers import (
     GroupDetailSerializer,
     GroupListSerializer,
     LocationSerializer,

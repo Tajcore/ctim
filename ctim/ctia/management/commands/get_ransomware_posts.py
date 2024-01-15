@@ -2,12 +2,13 @@ import json
 import logging
 
 import requests
-from ctia.models import Group, Post
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 from django.utils.dateparse import parse_datetime
 from django.utils.timezone import is_aware, make_aware
+
+from ctim.ctia.models import Group, Post
 
 # Configure logging
 logger = logging.getLogger(__name__)
