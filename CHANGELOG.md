@@ -2,6 +2,13 @@
 
 
 
+## v0.2.0 (2024-01-15)
+
+### Feature
+
+* feat(platform): tests now included in the pre-commit ([`4124b4f`](https://github.com/thompsonson/ctim/commit/4124b4f004ff12480ec2cdc829fa7c42ceca3b34))
+
+
 ## v0.1.1 (2024-01-15)
 
 ### Fix
