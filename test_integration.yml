@@ -15,9 +15,21 @@ services:
       - postgres
     volumes:
       - .:/app:z
-    env_file:
-      - ./.envs/.local/.django
-      - ./.envs/.local/.postgres
+    environment:
+      DJANGO_USE_LOCAL_ENV: true
+      DJANGO_ALLOWED_HOSTS: localhost,0.0.0.0,127.0.0.1
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ctim
+      POSTGRES_USER: debug
+      POSTGRES_PASSWORD: debug
+      DATABASE_URL: "postgres://debug:debug@postgres:5432/ctim"
+      SENTRY_DSN: ${SENTRY_DSN}
+      SENTRY_ENVIRONMENT: GithubCI
+      SENTRY_TRACES_SAMPLE_RATE: 1.0
+      USE_DOCKER: yes
+      IPYTHONDIR: /app/.ipython
+      REDIS_URL: redis://redis:6379/0
     ports:
       - '8000:8000'
     command: /start
@@ -31,21 +43,11 @@ services:
     volumes:
       - ctim_local_postgres_data:/var/lib/postgresql/data
       - ctim_local_postgres_data_backups:/backups
-    env_file:
-      - ./.envs/.local/.postgres
-
-  docs:
-    image: ctim_local_docs
-    container_name: ctim_local_docs
-    build:
-      context: .
-      dockerfile: ./compose/local/docs/Dockerfile
-    env_file:
-      - ./.envs/.local/.django
-    volumes:
-      - ./docs:/docs:z
-      - ./config:/app/config:z
-      - ./ctim:/app/ctim:z
-    ports:
-      - '9000:9000'
-    command: /start-docs
+    environment:
+      DJANGO_USE_LOCAL_ENV: true
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ctim
+      POSTGRES_USER: debug
+      POSTGRES_PASSWORD: debug
+      DATABASE_URL: "postgres://debug:debug@postgres:5432/ctim"

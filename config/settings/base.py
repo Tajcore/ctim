@@ -57,10 +57,12 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 if USE_LOCAL_ENV:
+    print("using local env")
     DATABASE_URL = os.getenv("DATABASE_URL")
 else:
+    print("using .env")
     DATABASE_URL = env.db("DATABASE_URL")
-
+print(DATABASE_URL)
 # Parse the DATABASE_URL to get a configuration dictionary
 parsed_config = dj_database_url.parse(DATABASE_URL)
 

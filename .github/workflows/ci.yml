@@ -40,6 +40,21 @@ jobs:
   # With no caching at all the entire ci process takes 4m 30s to complete!
   pytest:
     runs-on: ubuntu-latest
+    env:
+      DJANGO_USE_LOCAL_ENV: true
+      DJANGO_ALLOWED_HOSTS: localhost,0.0.0.0,127.0.0.1
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ctim
+      POSTGRES_USER: debug
+      POSTGRES_PASSWORD: debug
+      DATABASE_URL: "postgres://debug:debug@postgres:5432/ctim"
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SENTRY_ENVIRONMENT: GithubCI
+      SENTRY_TRACES_SAMPLE_RATE: 1.0
+      USE_DOCKER: yes
+      IPYTHONDIR: /app/.ipython
+      REDIS_URL: redis://redis:6379/0
 
     steps:
       - name: Checkout Code Repository
@@ -56,3 +71,24 @@ jobs:
 
       - name: Tear down the Stack
         run: docker compose -f test_integration.yml down
+
+  release:
+    needs: [pytest]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: '16.x'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npx semantic-release

@@ -10,6 +10,7 @@ from django.utils.timezone import is_aware, make_aware
 
 from ctim.ctia.models.ransomware import Group, Post
 
+
 # Configure logging
 logger = logging.getLogger(__name__)
 

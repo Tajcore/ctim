@@ -5,8 +5,7 @@ from drf_spectacular.views import SpectacularAPIView
 from rest_framework import viewsets
 
 from ctim.ctia.models.ransomware import Group, Location, Post, Profile
-
-from .serializers import (
+from ctim.ctia.serializers import (
     GroupDetailSerializer,
     GroupListSerializer,
     LocationSerializer,
