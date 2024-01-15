@@ -8,7 +8,8 @@ from django.db.utils import IntegrityError
 from django.utils.dateparse import parse_datetime
 from django.utils.timezone import is_aware, make_aware
 
-from ctim.ctia.models import Group, Location, Profile
+from ctim.ctia.models.ransomware import Group, Location, Profile
+
 
 # Configure logging
 logger = logging.getLogger(__name__)

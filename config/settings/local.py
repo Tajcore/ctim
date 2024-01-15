@@ -76,7 +76,7 @@ LOGGING = {
     },
     "handlers": {
         "sentry": {
-            "level": "INFO",  # Adjust the level as needed
+            "level": "INFO",
             "class": "sentry_sdk.integrations.logging.EventHandler",
         },
         "console": {
@@ -112,6 +112,16 @@ LOGGING = {
             "level": "CRITICAL",  # Only log errors and critical issues
             "propagate": False,
         },
+        "ctim.ctia.tasks": {
+            "handlers": ["null"],  # set to null as the celeery handler picks it up
+            "level": "DEBUG",
+            "propagate": True,
+        },
     },
 }
-# ... any other settings you may have ...
+
+
+# Celery
+# ------------------------------------------------------------------------------
+# https://docs.celeryq.dev/en/stable/userguide/configuration.html#task-eager-propagates
+CELERY_TASK_EAGER_PROPAGATES = True

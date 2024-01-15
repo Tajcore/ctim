@@ -280,6 +280,5 @@ ctim/media/
 !.envs/.local/
 
 .envrc_local
-
 *.session
-path_to_media_folder
+path_to_media_folder/

@@ -4,7 +4,7 @@ from drf_spectacular.generators import SchemaGenerator
 from drf_spectacular.views import SpectacularAPIView
 from rest_framework import viewsets
 
-from ctim.ctia.models import Group, Location, Post, Profile
+from ctim.ctia.models.ransomware import Group, Location, Post, Profile
 from ctim.ctia.serializers import (
     GroupDetailSerializer,
     GroupListSerializer,
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class GroupViewSet(viewsets.ModelViewSet):
-    queryset = Group.objects.all()
+    queryset = Group.objects.all().order_by("name")
     filterset_fields = ["name"]
 
     def get_serializer_class(self):
@@ -29,13 +29,13 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 class LocationViewSet(viewsets.ModelViewSet):
-    queryset = Location.objects.all()
+    queryset = Location.objects.all().order_by("group", "fqdn", "available")
     serializer_class = LocationSerializer
     filterset_fields = ["group", "fqdn", "available"]
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
+    queryset = Profile.objects.all().order_by("group", "url")
     serializer_class = ProfileSerializer
     filterset_fields = ["group", "url"]
 
