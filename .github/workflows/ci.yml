@@ -39,6 +39,7 @@ jobs:
 
   # With no caching at all the entire ci process takes 4m 30s to complete!
   pytest:
+    needs: [linter]
     runs-on: ubuntu-latest
     env:
       DJANGO_USE_LOCAL_ENV: true
@@ -60,6 +61,11 @@ jobs:
       - name: Checkout Code Repository
         uses: actions/checkout@v4
 
+      - name: Clear Python Cache
+        run: |
+          find . -name '__pycache__' -exec rm -rf {} +
+          find . -name '*.pyc' -exec rm -f {} +
+
       - name: Build the Stack
         run: docker compose -f test_integration.yml build
 
@@ -67,28 +73,29 @@ jobs:
         run: docker compose -f test_integration.yml run --rm django python manage.py migrate
 
       - name: Run Django Tests
-        run: docker compose -f test_integration.yml run django pytest
+        run: docker compose -f test_integration.yml run django test ctim.users.tests
+
+      - name: Run Django Tests
+        run: docker compose -f test_integration.yml run django test ctim.ctia.tests
 
       - name: Tear down the Stack
         run: docker compose -f test_integration.yml down
 
+
   release:
-    needs: [pytest]
+    needs: [pytest, linter]
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged && github.ref == 'refs/heads/main'
+    concurrency: release
+    permissions:
+      id-token: write
+      contents: write
+
     steps:
-      - name: Checkout Code Repository
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
-      - name: Install Node.js
-        uses: actions/setup-node@v2.4.0
-        with:
-          node-version: '16.x'
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Run Semantic Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx semantic-release
+    - name: Python Semantic Release
+      uses: python-semantic-release/python-semantic-release@master
+      with:
+        github_token: ${{ secrets.GH_TOKEN }}
