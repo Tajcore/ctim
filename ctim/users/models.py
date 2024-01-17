@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import CharField, EmailField
+from django.db.models import CharField, EmailField, JSONField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -19,6 +19,11 @@ class User(AbstractUser):
     last_name = None  # type: ignore
     email = EmailField(_("email address"), unique=True)
     username = None  # type: ignore
+    # CTIM specific user fields
+    business_role = CharField(_("Business Role"), max_length=255, blank=True, null=True)
+    company = CharField(_("Company"), max_length=255, blank=True, null=True)
+    industry = CharField(_("Industry"), max_length=255, blank=True, null=True)
+    interests = JSONField(_("Interests"), default=dict, blank=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

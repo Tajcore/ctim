@@ -23,21 +23,10 @@ repos:
   - repo: local
     hooks:
       - id: django-users-tests
-        name: Run Django Users Tests
-        entry: docker compose -f local.yml run --rm django python manage.py test ctim.users.tests
-        language: system
-        files: ^ctim/(config|compose/local|requirements/base\.txt|requirements/local\.txt|ctim/contrib|ctim/users)/
-        exclude: ^ctim/ctim/ctia/
-        always_run: false
-        verbose: true
-
-      - id: django-ctia-tests
-        name: Run Django CTIA Tests
-        entry: docker compose -f local.yml run --rm django python manage.py test ctim.ctia.tests
-        language: system
-        files: ^ctim/(config|compose/local|requirements/base\.txt|requirements/local\.txt|ctim/contrib|ctim/ctia)/
-        exclude: ^ctim/ctim/users/
-        always_run: false
+        name: Check if Django Tests need to be run
+        entry: ./.pre-commit-reminder.sh
+        language: script
+        pass_filenames: false
         verbose: true
 
   - repo: https://github.com/adamchainz/django-upgrade
