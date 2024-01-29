@@ -15,7 +15,7 @@ default_hosts = ["localhost", "0.0.0.0", "127.0.0.1"]
 
 # Pull ALLOWED_HOSTS from environment variable, fallback to default if not set
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=default_hosts)
-CSRF_TRUSTED_ORIGINS = ["https://api.thompson.gr"]
+CSRF_TRUSTED_ORIGINS = ["https://api.thompson.gr", "https://ctim.agentia.tech"]
 
 # CACHES
 # ------------------------------------------------------------------------------
