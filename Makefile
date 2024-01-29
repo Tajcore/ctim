@@ -10,7 +10,9 @@ default: help
 help:
 	@echo "Makefile commands:"
 	@echo "build     - Build the Docker images"
+	@echo "build-django - Build the Django Docker image"
 	@echo "up        - Run the Docker containers"
+	@echo "up-django - Run the Django Docker container"
 	@echo "down      - Stop the Docker containers"
 	@echo "restart   - Restart the Docker containers"
 	@echo "logs      - Follow log output of the containers"
@@ -27,9 +29,17 @@ help:
 build:
 	docker-compose -f local.yml build
 
+.PHONY: build-django
+build-django:
+	docker-compose -f local.yml build django
+
 .PHONY: up
 up:
 	docker-compose -f local.yml up -d
+
+.PHONY: up-django
+up-django:
+	docker-compose -f local.yml up -d django
 
 .PHONY: down
 down:
@@ -76,3 +86,9 @@ startapp:
 .PHONY: openapi_schema
 openapi_schema:
 	docker-compose -f local.yml run --rm django $(MANAGE) spectacular --file schema.yml
+
+.PHONY: deploy
+deploy:
+	@echo "You are about to deploy the current branch to Heroku."
+	@read -p "Are you sure you want to continue? [y/N]: " confirm && [ $$confirm = y ] || [ $$confirm = Y ] || (echo "Deploy cancelled."; exit 1)
+	@git push heroku `git rev-parse --abbrev-ref HEAD`:main
