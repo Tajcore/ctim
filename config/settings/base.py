@@ -62,6 +62,17 @@ if USE_LOCAL_ENV:
 else:
     print("using .env")
     DATABASE_URL = env.db("DATABASE_URL")
+
+print("Type of DATABASE_URL:", type(DATABASE_URL).__name__)
+
+# Check if DATABASE_URL is a dictionary, convert to URL string if necessary
+if isinstance(DATABASE_URL, dict):
+    # Example format: 'postgres://USER:PASSWORD@HOST:PORT/NAME'
+    DATABASE_URL = (
+        f"postgres://{DATABASE_URL['USER']}:{DATABASE_URL['PASSWORD']}"
+        f"@{DATABASE_URL['HOST']}:{DATABASE_URL['PORT']}/{DATABASE_URL['NAME']}"
+    )
+
 print(DATABASE_URL)
 # Parse the DATABASE_URL to get a configuration dictionary
 parsed_config = dj_database_url.parse(DATABASE_URL)

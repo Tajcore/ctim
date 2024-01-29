@@ -1,2 +1,1 @@
-worker: REMAP_SIGTERM=SIGQUIT celery -A config.celery_app worker --loglevel=info
-beat: REMAP_SIGTERM=SIGQUIT celery -A config.celery_app beat --loglevel=info
+web: gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
