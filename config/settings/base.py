@@ -320,7 +320,7 @@ CELERY_TASK_SEND_SENT_EVENT = True
 # django-allauth
 # ------------------------------------------------------------------------------
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
-ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
+ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", False)
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
