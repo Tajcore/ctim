@@ -17,7 +17,7 @@
       <ul class="socialaccount_providers">
         {% for provider in socialaccount_providers %}
           <li>
-            <a href="{{ provider.get_login_url }}"
+            <a href="{% provider_login_url provider %}"
                class="socialaccount_provider {{ provider.id }}">
               <i class="fab fa-{{ provider.id }}"></i>
               Sign up with {{ provider.name }}

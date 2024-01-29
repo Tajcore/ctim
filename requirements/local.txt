@@ -40,3 +40,5 @@ pytest-django==4.7.0  # https://github.com/pytest-dev/pytest-django
 
 
 sentry-sdk==1.39.1  # https://github.com/getsentry/sentry-python
+
+beautifulsoup4 # https://pypi.org/project/beautifulsoup4/

@@ -6,18 +6,18 @@
 {% load static %}
 
 {% block head_title %}
-  {% translate "Sign In" %}
+  {% translate "Sign in" %}
 {% endblock head_title %}
 {% block inner %}
-  <h1>{% translate "Sign In" %}</h1>
+  <h1>{% translate "Sign in" %}</h1>
   {% get_providers as socialaccount_providers %}
   {% if socialaccount_providers %}
-    <p>{% translate "Please sign in with one of your existing third party accounts:" %}</p>
+    <p>{% translate "Please use one of your existing third party accounts to sign in:" %}</p>
     <div class="socialaccount_ballot">
       <ul class="socialaccount_providers">
         {% for provider in socialaccount_providers %}
           <li>
-            <a href="{{ provider.get_login_url }}"
+            <a href="{% provider_login_url provider %}"
                class="socialaccount_provider {{ provider.id }}">
               <i class="fab fa-{{ provider.id }}"></i>
               Sign in with {{ provider.name }}
