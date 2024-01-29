@@ -2,6 +2,29 @@
 
 
 
+## v0.3.0 (2024-01-29)
+
+### Feature
+
+* feat(platform): Beta Production Heroku environment
+
+Created a Heroku beta environment for the web components ([`ddd0bcf`](https://github.com/thompsonson/ctim/commit/ddd0bcfdf373df3e14711091353b6ae675afa794))
+
+* feat(platform): finalising the heroku config ([`fe71dfc`](https://github.com/thompsonson/ctim/commit/fe71dfc979dbb5fad28d5c728fd28bc4b03f70a3))
+
+* feat(platform): a test of heroku ([`491eab2`](https://github.com/thompsonson/ctim/commit/491eab29699b18f4a39fbd90eca79a5b7c26a8f8))
+
+* feat(platform): a test of heroku ([`28237c3`](https://github.com/thompsonson/ctim/commit/28237c393ce8f60e6cc52686544ff1d5b549b66c))
+
+* feat(platform): a test of heroku ([`52c3818`](https://github.com/thompsonson/ctim/commit/52c38184e710a1da57f0bc8d2b7c941b681cf149))
+
+* feat(platform): a test of heroku ([`7b97f22`](https://github.com/thompsonson/ctim/commit/7b97f224c8126b5fb73993e6324ddd0f17bc7358))
+
+* feat(platform): a test of heroku ([`c16daa7`](https://github.com/thompsonson/ctim/commit/c16daa7707823275a816fe16d9cf5e6298743045))
+
+* feat(platform): a test of heroku ([`bf6f1db`](https://github.com/thompsonson/ctim/commit/bf6f1dbaa7a5842bcc9d501971458e02f265cd07))
+
+
 ## v0.2.0 (2024-01-15)
 
 ### Feature
