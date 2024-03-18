@@ -23,7 +23,7 @@ help:
 	@echo "shell     - Open the Django shell"
 	@echo "test      - Run tests"
 	@echo "startapp  - Create a new Django app"
-	@echo "openapi_schema   - Create a new schema.yml"
+	@echo "deploy    - Deploy to Heroku"
 
 .PHONY: build
 build:
