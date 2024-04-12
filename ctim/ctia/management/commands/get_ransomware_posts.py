@@ -28,6 +28,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         json_file = kwargs["json_file"]
+        self.stdout.write(f"Running handle for json_file: {json_file}")
         try:
             if json_file.startswith("http://") or json_file.startswith("https://"):
                 response = requests.get(json_file)
@@ -38,9 +39,11 @@ class Command(BaseCommand):
                     data = json.load(file)
             for item in data:
                 try:
+                    self.stdout.write(f"Running update_or_create for group: {item['group_name']}")
                     group_name = item["group_name"]
                     group, _ = Group.objects.get_or_create(name=group_name)
 
+                    self.stdout.write(f"Running update_or_create for port titled: {item['post_title']}")
                     Post.objects.update_or_create(
                         title=item["post_title"],
                         url=item["post_url"],

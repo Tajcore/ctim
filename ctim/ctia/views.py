@@ -17,6 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 class GroupViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
     queryset = Group.objects.all().order_by("name")
     filterset_fields = ["name"]
 
@@ -29,6 +31,8 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 class LocationViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
     queryset = Location.objects.all().order_by("group", "fqdn", "available")
     serializer_class = LocationSerializer
     filterset_fields = ["group", "fqdn", "available"]
@@ -41,6 +45,9 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
 
 class CustomSchemaGenerator(SchemaGenerator):
+    authentication_classes = []
+    permission_classes = []
+
     def get_endpoints(self, request=None):
         endpoints = super().get_endpoints(request)
         # Filter out non-ctia endpoints
@@ -51,6 +58,8 @@ class CustomSchemaGenerator(SchemaGenerator):
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
     queryset = Post.objects.all().order_by("-published")  # Order by 'published' in descending order
     serializer_class = PostSerializer
     filterset_fields = ["title", "group", "published"]
