@@ -54,9 +54,9 @@ class ProfileInline(admin.TabularInline):
 
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
-    list_display = ("name", "captcha", "parser", "javascript_render", "description")
+    list_display = ("name", "description")
     search_fields = ("name",)
-    inlines = [LocationInline, ProfileInline, PostInline]
+    # inlines = [LocationInline, ProfileInline, PostInline]
 
 
 class GroupInline(admin.TabularInline):
