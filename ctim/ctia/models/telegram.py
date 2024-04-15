@@ -5,6 +5,8 @@ from asgiref.sync import sync_to_async
 from django.db import connection, models
 from django.db.models import JSONField, Max
 
+from ctim.ctia.models.threat_actor import ThreatActor
+
 
 class UserProfile(models.Model):
     username = models.CharField(max_length=255)
@@ -25,6 +27,13 @@ class Channel(models.Model):
     source_urls = models.TextField(help_text="Comma-separated list of source URLs", blank=True, null=True)
     metadata = JSONField(blank=True, null=True)  # Flexible storage for additional channel attributes
     is_being_processed = models.BooleanField(default=False)
+    owner = models.ForeignKey(
+        ThreatActor,
+        on_delete=models.SET_NULL,  # Set to null if the ThreatActor is deleted
+        related_name="owned_channels",
+        null=True,  # Allows the owner to be null
+        blank=True,  # Optional in forms as well
+    )
 
     @property
     def last_processed_message_id(self):

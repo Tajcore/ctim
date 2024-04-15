@@ -3,6 +3,62 @@ from django.contrib import admin
 
 from ctim.ctia.models.ransomware import Group, Location, Post, Profile
 from ctim.ctia.models.telegram import Channel, ChannelPost, FailedChannelPost
+from ctim.ctia.models.threat_actor import CVE, Mitigation, RelatedThreatGroup, Risk, ThreatActor
+
+
+@admin.register(ThreatActor)
+class ThreatActorAdmin(admin.ModelAdmin):
+    list_display = ("name", "origin", "activity_period")  # Adjust fields as needed
+    search_fields = ("name", "notable_info")
+    list_filter = ("origin",)
+
+
+@admin.register(Mitigation)
+class MitigationAdmin(admin.ModelAdmin):
+    list_display = ("description", "threat_actor_display")
+    list_filter = ("threat_actor",)
+    search_fields = ("description", "threat_actor__name")
+
+    @admin.display(description="Threat Actor")
+    def threat_actor_display(self, obj):
+        return obj.threat_actor.name
+
+
+@admin.register(RelatedThreatGroup)
+class RelatedThreatGroupAdmin(admin.ModelAdmin):
+    list_display = ("main_group_name", "related_group_name")
+    list_filter = ("main_group", "related_group")
+    search_fields = ("main_group__name", "related_group__name")
+
+    @admin.display(description="Main Group")
+    def main_group_name(self, obj):
+        return obj.main_group.name
+
+    @admin.display(description="Related Group")
+    def related_group_name(self, obj):
+        return obj.related_group.name
+
+
+@admin.register(CVE)
+class CVEAdmin(admin.ModelAdmin):
+    list_display = ("cve_id", "threat_actor_name", "description", "exploited_vulnerabilities")
+    list_filter = ("threat_actor",)
+    search_fields = ("cve_id", "description", "exploited_vulnerabilities", "threat_actor__name")
+
+    @admin.display(description="Threat Actor")
+    def threat_actor_name(self, obj):
+        return obj.threat_actor.name
+
+
+@admin.register(Risk)
+class RiskAdmin(admin.ModelAdmin):
+    list_display = ("description", "threat_actor_display")
+    list_filter = ("threat_actor",)
+    search_fields = ("description", "threat_actor__name")
+
+    @admin.display(description="Threat Actor")
+    def threat_actor_display(self, obj):
+        return obj.threat_actor.name
 
 
 @admin.register(Post)
@@ -54,9 +110,9 @@ class ProfileInline(admin.TabularInline):
 
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
-    list_display = ("name", "captcha", "parser", "javascript_render", "description")
+    list_display = ("name", "description")
     search_fields = ("name",)
-    inlines = [LocationInline, ProfileInline, PostInline]
+    # inlines = [LocationInline, ProfileInline, PostInline]
 
 
 class GroupInline(admin.TabularInline):

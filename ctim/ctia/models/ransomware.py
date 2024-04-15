@@ -1,6 +1,8 @@
 # ctim/ctia/models/ransomware.py
 from django.db import models
 
+from ctim.ctia.models.threat_actor import ThreatActor
+
 
 class Group(models.Model):
     name = models.CharField(max_length=100)
@@ -9,6 +11,13 @@ class Group(models.Model):
     javascript_render = models.BooleanField(default=False)
     meta = models.JSONField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    owner = models.ForeignKey(
+        ThreatActor,
+        on_delete=models.SET_NULL,  # Set to null if the ThreatActor is deleted
+        related_name="owned_groups",
+        null=True,  # Allows the owner to be null
+        blank=True,  # Optional in forms as well
+    )
 
     def __str__(self):
         return self.name
