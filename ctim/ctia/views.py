@@ -5,12 +5,18 @@ from drf_spectacular.views import SpectacularAPIView
 from rest_framework import viewsets
 
 from ctim.ctia.models.ransomware import Group, Location, Post, Profile
+from ctim.ctia.models.threat_actor import CVE, Mitigation, RelatedThreatGroup, Risk, ThreatActor
 from ctim.ctia.serializers import (
+    CVESerializer,
     GroupDetailSerializer,
     GroupListSerializer,
     LocationSerializer,
+    MitigationSerializer,
     PostSerializer,
     ProfileSerializer,
+    RelatedThreatGroupSerializer,
+    RiskSerializer,
+    ThreatActorSerializer,
 )
 
 logger = logging.getLogger(__name__)
@@ -67,3 +73,33 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class CustomSchemaView(SpectacularAPIView):
     generator_class = CustomSchemaGenerator
+
+
+class MitigationViewSet(viewsets.ModelViewSet):
+    queryset = Mitigation.objects.all()
+    serializer_class = MitigationSerializer
+    filterset_fields = ["threat_actor"]
+
+
+class RelatedThreatGroupViewSet(viewsets.ModelViewSet):
+    queryset = RelatedThreatGroup.objects.all()
+    serializer_class = RelatedThreatGroupSerializer
+    filterset_fields = ["main_group", "related_group"]
+
+
+class CVEViewSet(viewsets.ModelViewSet):
+    queryset = CVE.objects.all()
+    serializer_class = CVESerializer
+    filterset_fields = ["threat_actor"]
+
+
+class RiskViewSet(viewsets.ModelViewSet):
+    queryset = Risk.objects.all()
+    serializer_class = RiskSerializer
+    filterset_fields = ["threat_actor"]
+
+
+class ThreatActorViewSet(viewsets.ModelViewSet):
+    queryset = ThreatActor.objects.all()
+    serializer_class = ThreatActorSerializer
+    filterset_fields = ["name", "origin"]
