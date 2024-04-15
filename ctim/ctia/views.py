@@ -76,30 +76,40 @@ class CustomSchemaView(SpectacularAPIView):
 
 
 class MitigationViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
     queryset = Mitigation.objects.all()
     serializer_class = MitigationSerializer
     filterset_fields = ["threat_actor"]
 
 
 class RelatedThreatGroupViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
     queryset = RelatedThreatGroup.objects.all()
     serializer_class = RelatedThreatGroupSerializer
     filterset_fields = ["main_group", "related_group"]
 
 
 class CVEViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
     queryset = CVE.objects.all()
     serializer_class = CVESerializer
     filterset_fields = ["threat_actor"]
 
 
 class RiskViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
     queryset = Risk.objects.all()
     serializer_class = RiskSerializer
     filterset_fields = ["threat_actor"]
 
 
 class ThreatActorViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
     queryset = ThreatActor.objects.all()
     serializer_class = ThreatActorSerializer
     filterset_fields = ["name", "origin"]
