@@ -1,7 +1,23 @@
+# ctim/ctim/ctia/serializers.py
+
 from rest_framework import serializers
 
 from ctim.ctia.models.ransomware import Group, Location, Post, Profile
 from ctim.ctia.models.threat_actor import CVE, Mitigation, RelatedThreatGroup, Risk, ThreatActor
+
+
+class CaseInsensitiveGroupNameField(serializers.CharField):
+    def to_internal_value(self, data):
+        # Explicit validation: Ensure that the input data is a non-empty string
+        if not isinstance(data, str) or not data.strip():
+            raise serializers.ValidationError("Group name must be a non-empty string.")
+
+        # Transform the input data into an internal representation
+        return self.get_group_by_name(data)
+
+    def get_group_by_name(self, name):
+        # Retrieve the group object with case-insensitive matching
+        return Group.objects.filter(name__iexact=name).first()
 
 
 class GroupListSerializer(serializers.ModelSerializer):
@@ -11,6 +27,8 @@ class GroupListSerializer(serializers.ModelSerializer):
 
 
 class GroupDetailSerializer(serializers.ModelSerializer):
+    name = CaseInsensitiveGroupNameField()
+
     class Meta:
         model = Group
         fields = ["id", "name", "description"]  # Include the description
