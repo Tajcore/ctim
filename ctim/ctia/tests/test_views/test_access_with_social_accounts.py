@@ -39,8 +39,16 @@ class SocialSignupTest(APITestCase):
             self.assertIsNotNone(link, f"{provider_class} login link is missing from the page")
             self.assertTrue(hasattr(link, "href"), f"{provider_class} link does not have an href attribute")
 
+    def check_social_links_not_present(self, url, provider_classes):
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        soup = BeautifulSoup(response.content, "html.parser")
+        for provider_class in provider_classes:
+            link = soup.find("a", class_=provider_class)
+            self.assertIsNone(link, f"{provider_class} login link is unexpectedly present on the page")
+
     def test_social_login_links_present_signup(self):
-        self.check_social_links(
+        self.check_social_links_not_present(
             reverse("account_signup"), ["socialaccount_provider github", "socialaccount_provider google"]
         )
 

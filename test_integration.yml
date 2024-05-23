@@ -16,7 +16,7 @@ services:
     volumes:
       - .:/app:z
     environment:
-      DJANGO_USE_LOCAL_ENV: true
+      DJANGO_USE_LOCAL_ENV: "true"
       DJANGO_ALLOWED_HOSTS: localhost,0.0.0.0,127.0.0.1
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
@@ -27,7 +27,7 @@ services:
       SENTRY_DSN: ${SENTRY_DSN}
       SENTRY_ENVIRONMENT: GithubCI
       SENTRY_TRACES_SAMPLE_RATE: 1.0
-      USE_DOCKER: yes
+      USE_DOCKER: "yes"
       IPYTHONDIR: /app/.ipython
       REDIS_URL: redis://redis:6379/0
     ports:
@@ -44,7 +44,7 @@ services:
       - ctim_local_postgres_data:/var/lib/postgresql/data
       - ctim_local_postgres_data_backups:/backups
     environment:
-      DJANGO_USE_LOCAL_ENV: true
+      DJANGO_USE_LOCAL_ENV: "true"
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       POSTGRES_DB: ctim

@@ -42,7 +42,7 @@ jobs:
     needs: [linter]
     runs-on: ubuntu-latest
     env:
-      DJANGO_USE_LOCAL_ENV: true
+      DJANGO_USE_LOCAL_ENV: "true"
       DJANGO_ALLOWED_HOSTS: localhost,0.0.0.0,127.0.0.1
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
@@ -53,7 +53,7 @@ jobs:
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_ENVIRONMENT: GithubCI
       SENTRY_TRACES_SAMPLE_RATE: 1.0
-      USE_DOCKER: yes
+      USE_DOCKER: "yes"
       IPYTHONDIR: /app/.ipython
       REDIS_URL: redis://redis:6379/0
 
@@ -66,8 +66,10 @@ jobs:
           find . -name '__pycache__' -exec rm -rf {} +
           find . -name '*.pyc' -exec rm -f {} +
 
-      - name: Build the Stack
-        run: docker compose -f test_integration.yml build
+      - name: Build and Start the Stack
+        run: |
+          docker compose -f test_integration.yml build django
+          docker-compose -f test_integration.yml up -d django
 
       - name: Run DB Migrations
         run: docker compose -f test_integration.yml run --rm django python manage.py migrate
