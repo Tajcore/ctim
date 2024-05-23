@@ -2,6 +2,57 @@
 
 
 
+## v0.4.0 (2024-05-23)
+
+### Chore
+
+* chore: make the Group update process smoother ([`c67713d`](https://github.com/thompsonson/ctim/commit/c67713d4114cb7f74ea2c6b9d82fcef056bb5c40))
+
+* chore: logging for ransomware tasks ([`7942ba9`](https://github.com/thompsonson/ctim/commit/7942ba9a9bee9ebdf5363d74fe821ef5ee264232))
+
+* chore: updating auth for publicly available APIs ([`8759de6`](https://github.com/thompsonson/ctim/commit/8759de60fe349cc0e6bc07be349f98158df0b850))
+
+### Ci
+
+* ci: testing starting the django test_integration stack ([`f7a9440`](https://github.com/thompsonson/ctim/commit/f7a944004a2c86efc1a4d2b486d7c6bd8eeb87dc))
+
+### Feature
+
+* feat: Threat Actor API endpoints ([`be12f00`](https://github.com/thompsonson/ctim/commit/be12f00da0f7cab35a33fbdd6210b76462ec6ef4))
+
+* feat: Threat Actor model for storing relevant data. ([`f7772c5`](https://github.com/thompsonson/ctim/commit/f7772c5836ca21803d3f6b3fc0ceee40fe6469d5))
+
+### Fix
+
+* fix: allow case insentive searching for group names ([`96dfc23`](https://github.com/thompsonson/ctim/commit/96dfc232c3fef416661bca3e21306c90835ce840))
+
+* fix: authentication failure on new endpoints ([`befab14`](https://github.com/thompsonson/ctim/commit/befab14cbbb37a26f3455cb31a39efe7b50064bf))
+
+* fix(platform): no need for sign up as it is only 3rd party log on ([`304f91c`](https://github.com/thompsonson/ctim/commit/304f91c259ffebeef1d8cffe2d1ea9ad8d484dac))
+
+* fix(platform): corrected the requirements for Heroku ([`dc550bf`](https://github.com/thompsonson/ctim/commit/dc550bf71ea0631db758f926e67e36cbb7adf93d))
+
+* fix(platform): corrected the Social Sign Up and Sign In, with tests ([`d4708f6`](https://github.com/thompsonson/ctim/commit/d4708f666d93b8a2fbb4901c5dd03c5d3296d4cd))
+
+### Unknown
+
+* Merge pull request #50 from thompsonson/fix40
+
+Fix40 - Chatbot won&#39;t recognize the input due to difference in letter cases ([`906d19d`](https://github.com/thompsonson/ctim/commit/906d19dc2ffde5d6511b0094203d5120e1fafd4b))
+
+* Merge pull request #47 from thompsonson/ado
+
+feat: Threat Actor API endpoints ([`72fe3a6`](https://github.com/thompsonson/ctim/commit/72fe3a6b9e8da191fa88ce930a2a096bb1d1ddf1))
+
+* Merge pull request #46 from thompsonson/ado
+
+feat: Threat Actor model for storing relevant data. ([`80db130`](https://github.com/thompsonson/ctim/commit/80db130f8d9451127d9b1397a314401d4ede71da))
+
+* Merge pull request #43 from thompsonson/public_api
+
+Public api ([`e94d22c`](https://github.com/thompsonson/ctim/commit/e94d22ce0fee3a03c3f4c522f5cc3033a93026b6))
+
+
 ## v0.3.0 (2024-01-29)
 
 ### Feature
