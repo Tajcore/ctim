@@ -16,6 +16,8 @@ class GroupViewSetTestCase(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         serializer = GroupListSerializer(instance=[self.group1, self.group2], many=True)
+        print(response.data)
+        print(serializer.data)
         self.assertEqual(response.data, serializer.data)
 
     def test_group_detail_view(self):
