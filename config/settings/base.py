@@ -125,6 +125,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    "crew",
     "ctim.users",
     "ctim.ctia.apps.CtiaConfig",
 ]

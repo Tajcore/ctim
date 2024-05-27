@@ -21,6 +21,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("o/", include("oauth2_provider.urls", namespace="oauth2_provider")),
     # Your stuff: custom urls includes go here
+    path("crew/", include("crew.urls")),
     path("ctia/", include("ctim.ctia.urls")),
     # Schema view
     path("ctia/schema/", CustomSchemaView.as_view(permission_classes=[AllowAny]), name="schema"),
