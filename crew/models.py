@@ -44,6 +44,7 @@ class AgentModel(models.Model):
 
 
 class TaskModel(models.Model):
+    name = models.CharField(max_length=100)
     description = models.TextField()
     expected_output = models.TextField()
     status = models.CharField(max_length=50, default="Pending")
@@ -53,10 +54,11 @@ class TaskModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.description
+        return self.name
 
 
 class CrewModel(models.Model):
+    name = models.CharField(max_length=100)
     agents = models.ManyToManyField(AgentModel)
     tasks = models.ManyToManyField(TaskModel)
     status = models.CharField(max_length=50, default="Pending")
@@ -64,7 +66,7 @@ class CrewModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Crew {self.id}"
+        return f"Crew {self.name}"
 
 
 class ExecutionResultModel(models.Model):
@@ -74,4 +76,4 @@ class ExecutionResultModel(models.Model):
     result_data = models.TextField()
 
     def __str__(self):
-        return f"Result for Crew {self.crew.id}"
+        return f"Result for Crew {self.crew.name}"

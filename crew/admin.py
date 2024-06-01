@@ -1,4 +1,5 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 
 from crew.tasks.tasks import run_crew_task
 
@@ -26,20 +27,20 @@ class ToolAdmin(admin.ModelAdmin):
 
 
 @admin.register(AgentModel)
-class AgentAdmin(admin.ModelAdmin):
+class AgentAdmin(ModelAdmin):
     list_display = ("role", "goal", "created_at", "updated_at")
     readonly_fields = ("created_at", "updated_at")
 
 
 @admin.register(TaskModel)
-class TaskAdmin(admin.ModelAdmin):
-    list_display = ("description", "status", "agent", "created_at", "updated_at")
+class TaskAdmin(ModelAdmin):
+    list_display = ("name", "description", "status", "agent", "created_at", "updated_at")
     readonly_fields = ("created_at", "updated_at")
 
 
 @admin.register(CrewModel)
-class CrewAdmin(admin.ModelAdmin):
-    list_display = ("id", "status", "created_at", "updated_at")
+class CrewAdmin(ModelAdmin):
+    list_display = ("name", "status", "created_at", "updated_at")
     readonly_fields = ("created_at", "updated_at")
     actions = ["kickoff_crew"]
 
@@ -51,6 +52,6 @@ class CrewAdmin(admin.ModelAdmin):
 
 
 @admin.register(ExecutionResultModel)
-class ExecutionResultAdmin(admin.ModelAdmin):
+class ExecutionResultAdmin(ModelAdmin):
     list_display = ("crew", "timestamp", "status")
-    readonly_fields = ("timestamp",)
+    readonly_fields = ("crew", "timestamp", "status")

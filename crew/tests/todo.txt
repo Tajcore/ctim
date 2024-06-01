@@ -1,0 +1,24 @@
+- Test for `AgentModel` creation
+- Test for `TaskModel` creation
+- Test for `CrewModel` creation
+- Test for `ExecutionResultModel` creation
+- Test for `AgentFactory` creating Agent instance
+- Test for `TaskFactory` creating Task instance
+- Test for `CrewFactory` creating Crew instance
+- Test for `run_crew_task` with valid crew ID
+- Test for `run_crew_task` with invalid crew ID
+- Test for `BaseTask` logging on success
+- Test for `BaseTask` logging on failure
+- Test for `BaseTask` logging on retry
+- Test for `BaseTask` updating `ExecutionResultModel` on success
+- Test for `BaseTask` updating `ExecutionResultModel` on failure
+- Test for `BaseTask` updating `ExecutionResultModel` on retry
+- Test for `BaseTask` execution time logging
+- Test for Sentry exception capture on failure
+- Test for Sentry exception capture on retry
+- Test for Sentry message capture on execution time
+- Test for Django admin `kickoff_crew` action success
+- Test for Django admin `kickoff_crew` action failure
+- Test for `run_crew_task` result data stored in `ExecutionResultModel`
+- Test for `run_crew_task` soft time limit enforcement
+- Test for `run_crew_task` handling task delegation correctly
