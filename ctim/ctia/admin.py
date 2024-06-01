@@ -1,20 +1,25 @@
 # ctim/ctia/admin.py
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 
 from ctim.ctia.models.ransomware import Group, Location, Post, Profile
 from ctim.ctia.models.telegram import Channel, ChannelPost, FailedChannelPost
 from ctim.ctia.models.threat_actor import CVE, Mitigation, RelatedThreatGroup, Risk, ThreatActor
 
+admin.site.site_header = "Agentia Administration"
+admin.site.site_title = "Agentia Administration Portal"
+admin.site.index_title = "Welcome to Agentia - data editing and agent configuration."
+
 
 @admin.register(ThreatActor)
-class ThreatActorAdmin(admin.ModelAdmin):
+class ThreatActorAdmin(ModelAdmin):
     list_display = ("name", "origin", "activity_period")  # Adjust fields as needed
     search_fields = ("name", "notable_info")
     list_filter = ("origin",)
 
 
 @admin.register(Mitigation)
-class MitigationAdmin(admin.ModelAdmin):
+class MitigationAdmin(ModelAdmin):
     list_display = ("description", "threat_actor_display")
     list_filter = ("threat_actor",)
     search_fields = ("description", "threat_actor__name")
@@ -25,7 +30,7 @@ class MitigationAdmin(admin.ModelAdmin):
 
 
 @admin.register(RelatedThreatGroup)
-class RelatedThreatGroupAdmin(admin.ModelAdmin):
+class RelatedThreatGroupAdmin(ModelAdmin):
     list_display = ("main_group_name", "related_group_name")
     list_filter = ("main_group", "related_group")
     search_fields = ("main_group__name", "related_group__name")
@@ -40,7 +45,7 @@ class RelatedThreatGroupAdmin(admin.ModelAdmin):
 
 
 @admin.register(CVE)
-class CVEAdmin(admin.ModelAdmin):
+class CVEAdmin(ModelAdmin):
     list_display = ("cve_id", "threat_actor_name", "description", "exploited_vulnerabilities")
     list_filter = ("threat_actor",)
     search_fields = ("cve_id", "description", "exploited_vulnerabilities", "threat_actor__name")
@@ -51,7 +56,7 @@ class CVEAdmin(admin.ModelAdmin):
 
 
 @admin.register(Risk)
-class RiskAdmin(admin.ModelAdmin):
+class RiskAdmin(ModelAdmin):
     list_display = ("description", "threat_actor_display")
     list_filter = ("threat_actor",)
     search_fields = ("description", "threat_actor__name")
@@ -62,7 +67,7 @@ class RiskAdmin(admin.ModelAdmin):
 
 
 @admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(ModelAdmin):
     list_display = ("title", "group", "discovered", "published", "country")
     search_fields = ("title", "group__name", "country")
     list_filter = ("group", "country", "published")
@@ -74,7 +79,7 @@ class PostInline(admin.TabularInline):
 
 
 @admin.register(Location)
-class LocationAdmin(admin.ModelAdmin):
+class LocationAdmin(ModelAdmin):
     list_display = (
         "group",
         "fqdn",
@@ -92,7 +97,7 @@ class LocationAdmin(admin.ModelAdmin):
 
 
 @admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
+class ProfileAdmin(ModelAdmin):
     list_display = ("group", "url")
     list_filter = ("group",)
     search_fields = ("url",)
@@ -109,7 +114,7 @@ class ProfileInline(admin.TabularInline):
 
 
 @admin.register(Group)
-class GroupAdmin(admin.ModelAdmin):
+class GroupAdmin(ModelAdmin):
     list_display = ("name", "description")
     search_fields = ("name",)
     # inlines = [LocationInline, ProfileInline, PostInline]
@@ -121,7 +126,7 @@ class GroupInline(admin.TabularInline):
 
 
 @admin.register(Channel)
-class ChannelAdmin(admin.ModelAdmin):
+class ChannelAdmin(ModelAdmin):
     list_display = ("name", "url", "description", "display_last_processed_message_id")
     search_fields = (
         "name",
@@ -138,14 +143,14 @@ class ChannelAdmin(admin.ModelAdmin):
 
 
 @admin.register(ChannelPost)
-class ChannelPostAdmin(admin.ModelAdmin):
+class ChannelPostAdmin(ModelAdmin):
     list_display = ("message_id", "content", "date_posted", "channel")
     list_filter = ("date_posted", "channel")
     search_fields = ("content",)
 
 
 @admin.register(FailedChannelPost)
-class FailedChannelPostAdmin(admin.ModelAdmin):
+class FailedChannelPostAdmin(ModelAdmin):
     list_display = ("channel_post_data", "error_message", "retry_count", "last_attempt_time")
     list_filter = ("retry_count", "last_attempt_time")
     search_fields = ("error_message",)
