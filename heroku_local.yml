@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: ctim_heroku_django
+    container_name: ctim_heroku_django
+    depends_on:
+      - redis
+    volumes:
+      - .:/app:z
+    env_file:
+      - .envrc_local_heroku_db
+    ports:
+      - '8000:8000'
+    command: /start
+
+  redis:
+    image: redis:6
+    container_name: ctim_heroku_redis
+
+  celeryworker:
+    <<: *django
+    image: ctim_heroku_celeryworker
+    container_name: ctim_heroku_celeryworker
+    depends_on:
+      - redis
+    ports: []
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: ctim_heroku_celerybeat
+    container_name: ctim_heroku_celerybeat
+    depends_on:
+      - redis
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: ctim_heroku_flower
+    container_name: ctim_heroku_flower
+    ports:
+      - '5555:5555'
+    command: /start-flower

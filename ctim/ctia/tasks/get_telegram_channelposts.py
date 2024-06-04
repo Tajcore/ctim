@@ -106,6 +106,7 @@ async def async_get_telegram_channelposts(channel_name):
 
     try:
         logger.info("Connecting to Telegram")
+        logger.debug(f"{settings.TELEGRAM_PHONE}, {settings.TELEGRAM_API_ID}, {settings.TELEGRAM_API_HASH}")
         client = await create_telegram_client(
             settings.TELEGRAM_PHONE, settings.TELEGRAM_API_ID, settings.TELEGRAM_API_HASH
         )
