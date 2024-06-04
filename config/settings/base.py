@@ -1,6 +1,7 @@
 """
 Base settings to build other settings files upon.
 """
+
 import logging
 import os
 from pathlib import Path
@@ -107,6 +108,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
+    "allauth_ui",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -119,6 +121,7 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     "oauth2_provider",
     "django_filters",
+    "widget_tweaks",
 ]
 
 LOCAL_APPS = [
