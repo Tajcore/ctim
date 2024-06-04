@@ -282,8 +282,10 @@ ctim/media/
 ### environment config ("secret")
 .envrc_local
 .envrc_heroku
+.envrc_local_heroku_db
 heroku_setup.txt
 
 ### run time files
 *.session
+*.session-journal
 path_to_media_folder/

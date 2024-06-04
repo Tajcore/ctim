@@ -1,0 +1,24 @@
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages INDIAN_CYBER_FORCE --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages IndianCyberForceOfficial --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages Indian_Cyber_Force_Official --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages AnonymousSudan --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages xAnonymousSudan --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages AnonymousSudanChat --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages arvinclub1 --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages SylhetGangSgOfficial --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages xSkynet --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages noname05716 --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages noname05716engchat --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages noname05716eng --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages TEAM_UCC --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages team_heroxx --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages ransomwatcher --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages MysteriousTeam0 --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages eaglecyberwashere --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages Insane_Team_pk --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages HacktivistPakistan --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages SilentForceMTB --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages FredensOfSecurity --loglevel DEBUG
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages Team_insane_Pakistan1 --loglevel DEBUG
+
+docker-compose -p heroku -f heroku_local.yml run --rm django python manage.py get_telegram_messages ywl_leaks --loglevel DEBUG
