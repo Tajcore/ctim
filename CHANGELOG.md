@@ -2,6 +2,15 @@
 
 
 
+## v0.5.0 (2024-06-04)
+
+### Feature
+
+* feat(telegram): process telegram groups locally ([`0989dd2`](https://github.com/thompsonson/ctim/commit/0989dd20f65999974d45794c26c136d02cd13cd2))
+
+* feat(telegram): process telegram groups locally ([`fdf0ac9`](https://github.com/thompsonson/ctim/commit/fdf0ac9b0d6bc0b419c1c776098555c7534e2511))
+
+
 ## v0.4.0 (2024-05-23)
 
 ### Chore
