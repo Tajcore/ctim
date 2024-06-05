@@ -439,3 +439,11 @@ else:
     TELEGRAM_API_HASH = env.db("TELEGRAM_API_HASH")
     TELEGRAM_PHONE = env.db("TELEGRAM_PHONE")
 TELEGRAM_BATCH_SIZE = 20
+
+# django-crew Config
+# ------------------------------------------------------------------------------
+# Note: do not forget the .
+ALLOWED_TOOL_MODULE_PATHS = [
+    "ctim.",
+    "crewai_tools.",
+]

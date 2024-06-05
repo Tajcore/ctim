@@ -2,7 +2,27 @@ from django.contrib import admin
 
 from crew.tasks.tasks import run_crew_task
 
-from .models import AgentModel, CrewModel, ExecutionResultModel, TaskModel
+from .models import AgentModel, CrewModel, ExecutionResultModel, TaskModel, ToolModel, ToolRegistryModel
+
+
+@admin.register(ToolRegistryModel)
+class ToolRegistryAdmin(admin.ModelAdmin):
+    list_display = ("name", "description", "module_path", "method_name")
+    search_fields = ("name", "module_path", "method_name")
+    readonly_fields = ("created_at", "updated_at")
+
+    # Optional: Customize the form display
+    fieldsets = ((None, {"fields": ("name", "description", "module_path", "method_name")}),)
+
+
+@admin.register(ToolModel)
+class ToolAdmin(admin.ModelAdmin):
+    list_display = ("registry", "created_at", "updated_at")
+    search_fields = ("registry__name",)
+    readonly_fields = ("created_at", "updated_at")
+
+    # Optional: Customize the form display
+    fieldsets = ((None, {"fields": ("registry",)}),)
 
 
 @admin.register(AgentModel)
