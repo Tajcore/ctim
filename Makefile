@@ -76,7 +76,7 @@ shell:
 
 .PHONY: test
 test:
-	docker-compose -f local.yml run --rm django $(MANAGE) test
+	docker-compose -f local.yml run --rm django $(MANAGE) test ctim.ctia.tests
 
 .PHONY: startapp
 startapp:

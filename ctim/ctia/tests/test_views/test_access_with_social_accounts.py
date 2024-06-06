@@ -48,11 +48,7 @@ class SocialSignupTest(APITestCase):
             self.assertIsNone(link, f"{provider_class} login link is unexpectedly present on the page")
 
     def test_social_login_links_present_signup(self):
-        self.check_social_links_not_present(
-            reverse("account_signup"), ["socialaccount_provider github", "socialaccount_provider google"]
-        )
+        self.check_social_links_not_present(reverse("account_signup"), ["social-github", "social-google"])
 
     def test_social_login_links_present_login(self):
-        self.check_social_links(
-            reverse("account_login"), ["socialaccount_provider github", "socialaccount_provider google"]
-        )
+        self.check_social_links(reverse("account_login"), ["social-github", "social-google"])
