@@ -2,9 +2,22 @@
 
 
 
+## v0.6.0 (2024-06-06)
+
+### Chore
+
+* chore: keeping branches tidy ([`e29ea02`](https://github.com/thompsonson/ctim/commit/e29ea02187a936b4619d15b4521a0376d1a01aae))
+
+### Fix
+
+* fix: merged crew database migrations ([`b5fe3a5`](https://github.com/thompsonson/ctim/commit/b5fe3a5374489ed7d83db3fc1501aa7c432b6c19))
+
+
 ## v0.5.1 (2024-06-06)
 
 ### Chore
+
+* chore: update git to share tests ([`cd51731`](https://github.com/thompsonson/ctim/commit/cd51731110334b1a26c02103b82ec406f252f1e2))
 
 * chore: implement django_allauth_ui
 
@@ -18,7 +31,19 @@ tailwind and less template overhead in the project ([`112b73d`](https://github.c
 
 * ci: clean automated jobs ([`e482e4d`](https://github.com/thompsonson/ctim/commit/e482e4dd9001e9ea8c75f7daf4712fd9749174c8))
 
+### Feature
+
+* feat: beautiful admin interface ([`9db2bfa`](https://github.com/thompsonson/ctim/commit/9db2bfa1ecb41fcdb21226aa3eeefc753f57cb5a))
+
+* feat: basic crew functionality ([`6e2225a`](https://github.com/thompsonson/ctim/commit/6e2225a6abea4cc24ebdf5856fcd3d688286c5b9))
+
 ### Fix
+
+* fix(ctia): admin name ([`5cc2291`](https://github.com/thompsonson/ctim/commit/5cc2291dba194c5bae569fe0c765e55b3aa0c57f))
+
+* fix(crew): models names ([`905b040`](https://github.com/thompsonson/ctim/commit/905b04017aee1cc7b5e651a5ccfdb8ad3b53b860))
+
+* fix: correct crew[tools] package ([`67e51b1`](https://github.com/thompsonson/ctim/commit/67e51b1061a3fbb73c79fe7cfeb4e661d3da2812))
 
 * fix: missing landing pages ([`d8fc3e3`](https://github.com/thompsonson/ctim/commit/d8fc3e3ffc905edba9ac343802b3786a474bc1d6))
 
