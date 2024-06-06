@@ -2,6 +2,31 @@
 
 
 
+## v0.5.1 (2024-06-06)
+
+### Chore
+
+* chore: implement django_allauth_ui
+
+tailwind and less template overhead in the project ([`112b73d`](https://github.com/thompsonson/ctim/commit/112b73d9fcba091a6afe85bc5a9f509b78b5ff62))
+
+* chore: migrate to django_allauth_ui ([`05e6875`](https://github.com/thompsonson/ctim/commit/05e6875843f20b0cf99b2a3e6a0c029b46b417d7))
+
+### Ci
+
+* ci: clean automated jobs that aren&#39;t used ([`034df47`](https://github.com/thompsonson/ctim/commit/034df47d588f70de1672216f9aee2c8b1586cb9b))
+
+* ci: clean automated jobs ([`e482e4d`](https://github.com/thompsonson/ctim/commit/e482e4dd9001e9ea8c75f7daf4712fd9749174c8))
+
+### Fix
+
+* fix: missing landing pages ([`d8fc3e3`](https://github.com/thompsonson/ctim/commit/d8fc3e3ffc905edba9ac343802b3786a474bc1d6))
+
+### Unknown
+
+* tests: fix the social account verification test ([`37c29d6`](https://github.com/thompsonson/ctim/commit/37c29d6557ac780ed7be0b3d8b1c9d3e46f5c4db))
+
+
 ## v0.5.0 (2024-06-04)
 
 ### Feature
