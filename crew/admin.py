@@ -1,9 +1,13 @@
+import logging
+
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 
 from crew.tasks.tasks import run_crew_task
 
 from .models import AgentModel, CrewModel, ExecutionResultModel, TaskModel, ToolModel, ToolRegistryModel
+
+logger = logging.getLogger(__name__)
 
 
 @admin.register(ToolRegistryModel)
@@ -46,9 +50,27 @@ class CrewAdmin(ModelAdmin):
 
     @admin.action(description="Kick off selected crew tasks")
     def kickoff_crew(self, request, queryset):
-        for crew in queryset:
-            run_crew_task.delay(crew.id)
-        self.message_user(request, "Crew task has been started.")
+        # Get the logger
+        logger = logging.getLogger("crew.factories")
+
+        # Store the original logging level
+        original_logging_level = logger.level
+        logger.info(f"Original logging level: {logging.getLevelName(original_logging_level)}")
+
+        # Set the logging level to DEBUG
+        logger.setLevel(logging.DEBUG)
+        logger.debug("Logging level set to DEBUG for detailed logging during task execution")
+
+        try:
+            for crew in queryset:
+                logger.debug(f"Initiating task for crew ID: {crew.id}")
+                run_crew_task.delay(crew.id)
+                logger.info(f"Crew task for ID {crew.id} has been started.")
+            self.message_user(request, "Crew task has been started.")
+        finally:
+            # Restore the original logging level
+            logger.setLevel(original_logging_level)
+            logger.info(f"Logging level restored to: {logging.getLevelName(original_logging_level)}")
 
 
 @admin.register(ExecutionResultModel)

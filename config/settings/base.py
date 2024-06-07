@@ -448,3 +448,12 @@ ALLOWED_TOOL_MODULE_PATHS = [
     "ctim.",
     "crewai_tools.",
 ]
+
+
+# API keys for Crew
+# ------------------------------------------------------------------------------
+# note: mid term this should be kept in a secret manager
+if USE_LOCAL_ENV:
+    SERPER_API_KEY = os.getenv("SERPER_API_KEY")
+else:
+    SERPER_API_KEY = env.db("SERPER_API_KEY")
