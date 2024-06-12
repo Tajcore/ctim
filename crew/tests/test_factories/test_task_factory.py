@@ -1,19 +1,23 @@
 import unittest
-from unittest.mock import patch, MagicMock
-from django.core.exceptions import ValidationError
-from crew.factories import TaskFactory, AgentFactory, ToolFactory
-from crew.models import TaskModel, AgentModel, ToolModel, ToolRegistryModel
-from factory.django import DjangoModelFactory
+from unittest.mock import MagicMock, patch
+
 import factory
+from django.core.exceptions import ValidationError
+from factory.django import DjangoModelFactory
+
+from crew.factories import AgentFactory, TaskFactory, ToolFactory
+from crew.models import AgentModel, TaskModel, ToolModel, ToolRegistryModel
+
 
 class ToolRegistryModelFactory(DjangoModelFactory):
     class Meta:
         model = ToolRegistryModel
 
-    name = factory.Faker('word')
-    description = factory.Faker('sentence')
+    name = factory.Faker("word")
+    description = factory.Faker("sentence")
     module_path = "some_module"
     method_name = "some_method"
+
 
 class ToolModelFactory(DjangoModelFactory):
     class Meta:
@@ -21,22 +25,25 @@ class ToolModelFactory(DjangoModelFactory):
 
     registry = factory.SubFactory(ToolRegistryModelFactory)
 
+
 class AgentModelFactory(DjangoModelFactory):
     class Meta:
         model = AgentModel
 
-    role = factory.Faker('word')
-    goal = factory.Faker('sentence')
-    backstory = factory.Faker('paragraph')
+    role = factory.Faker("word")
+    goal = factory.Faker("sentence")
+    backstory = factory.Faker("paragraph")
+
 
 class TaskModelFactory(DjangoModelFactory):
     class Meta:
         model = TaskModel
 
-    description = factory.Faker('sentence')
-    expected_output = factory.Faker('sentence')
-    status = factory.Faker('word')
+    description = factory.Faker("sentence")
+    expected_output = factory.Faker("sentence")
+    status = factory.Faker("word")
     agent = factory.SubFactory(AgentModelFactory)
+
 
 class Task:
     def __init__(self, description, expected_output, agent, tools):
@@ -45,8 +52,8 @@ class Task:
         self.agent = agent
         self.tools = tools
 
-class TaskFactoryTests(unittest.TestCase):
 
+class TaskFactoryTests(unittest.TestCase):
     def setUp(self):
         self.tool_registry = ToolRegistryModelFactory.create()
         self.tool = ToolModelFactory.create(registry=self.tool_registry)
@@ -56,8 +63,8 @@ class TaskFactoryTests(unittest.TestCase):
         self.task.tools.add(self.tool)
 
     # Validation Tests
-    @patch.object(ToolFactory, 'create')
-    @patch.object(AgentFactory, 'create')
+    @patch.object(ToolFactory, "create")
+    @patch.object(AgentFactory, "create")
     def test_create_task_instance_from_valid_task_model(self, mock_agent_factory_create, mock_tool_factory_create):
         mock_agent = MagicMock()
         mock_tool = MagicMock()
@@ -71,8 +78,8 @@ class TaskFactoryTests(unittest.TestCase):
         self.assertEqual(task_instance.tools, [mock_tool])
 
     # Relationship Tests
-    @patch.object(ToolFactory, 'create')
-    @patch.object(AgentFactory, 'create')
+    @patch.object(ToolFactory, "create")
+    @patch.object(AgentFactory, "create")
     def test_create_task_with_multiple_tools(self, mock_agent_factory_create, mock_tool_factory_create):
         mock_agent = MagicMock()
         mock_tool = MagicMock()
@@ -85,8 +92,8 @@ class TaskFactoryTests(unittest.TestCase):
         task_instance = TaskFactory.create(self.task)
         self.assertEqual(task_instance.tools, [mock_tool, mock_tool])
 
-    @patch.object(ToolFactory, 'create')
-    @patch.object(AgentFactory, 'create')
+    @patch.object(ToolFactory, "create")
+    @patch.object(AgentFactory, "create")
     def test_create_task_without_tools(self, mock_agent_factory_create, mock_tool_factory_create):
         self.task.tools.clear()
 
@@ -97,8 +104,8 @@ class TaskFactoryTests(unittest.TestCase):
         self.assertEqual(task_instance.tools, [])
 
     # Boundary Tests
-    @patch.object(ToolFactory, 'create')
-    @patch.object(AgentFactory, 'create')
+    @patch.object(ToolFactory, "create")
+    @patch.object(AgentFactory, "create")
     def test_create_task_with_long_strings(self, mock_agent_factory_create, mock_tool_factory_create):
         long_string = "a" * 1000
         self.task.description = long_string
@@ -115,8 +122,8 @@ class TaskFactoryTests(unittest.TestCase):
         self.assertEqual(task_instance.expected_output, long_string)
 
     # Error Handling Tests
-    @patch.object(ToolFactory, 'create')
-    @patch.object(AgentFactory, 'create')
+    @patch.object(ToolFactory, "create")
+    @patch.object(AgentFactory, "create")
     def test_create_task_from_invalid_task_model(self, mock_agent_factory_create, mock_tool_factory_create):
         invalid_task = MagicMock(spec=TaskModel)
         invalid_task.tools.all.return_value = []
@@ -125,21 +132,22 @@ class TaskFactoryTests(unittest.TestCase):
         with self.assertRaises(AttributeError):
             TaskFactory.create(invalid_task)
 
-    @patch.object(ToolFactory, 'create')
-    @patch.object(AgentFactory, 'create')
+    @patch.object(ToolFactory, "create")
+    @patch.object(AgentFactory, "create")
     def test_create_task_with_invalid_tool_model(self, mock_agent_factory_create, mock_tool_factory_create):
         mock_tool_factory_create.side_effect = ValidationError("Invalid tool model")
 
         with self.assertRaises(ValidationError):
             TaskFactory.create(self.task)
 
-    @patch.object(ToolFactory, 'create')
-    @patch.object(AgentFactory, 'create')
+    @patch.object(ToolFactory, "create")
+    @patch.object(AgentFactory, "create")
     def test_create_task_with_invalid_agent_model(self, mock_agent_factory_create, mock_tool_factory_create):
         mock_agent_factory_create.side_effect = ValidationError("Invalid agent model")
 
         with self.assertRaises(ValidationError):
             TaskFactory.create(self.task)
+
 
 if __name__ == "__main__":
     unittest.main()

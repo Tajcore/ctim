@@ -1,22 +1,19 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
+
 from crew.models import AgentModel, ToolModel, ToolRegistryModel
 
-class AgentModelTests(TestCase):
 
+class AgentModelTests(TestCase):
     def setUp(self):
         self.tool_registry = ToolRegistryModel.objects.create(
             name="ToolRegistry1",
             description="A tool registry description",
             module_path="allowed.module.path",
-            method_name="method_name"
+            method_name="method_name",
         )
         self.tool = ToolModel.objects.create(registry=self.tool_registry)
-        self.agent = AgentModel.objects.create(
-            role="Agent",
-            goal="Goal",
-            backstory="Backstory"
-        )
+        self.agent = AgentModel.objects.create(role="Agent", goal="Goal", backstory="Backstory")
         self.agent.tools.add(self.tool)
 
     # Validation Tests
@@ -27,26 +24,17 @@ class AgentModelTests(TestCase):
             self.fail("Agent model raised ValidationError unexpectedly!")
 
     def test_missing_role(self):
-        agent = AgentModel(
-            goal="Goal",
-            backstory="Backstory"
-        )
+        agent = AgentModel(goal="Goal", backstory="Backstory")
         with self.assertRaises(ValidationError):
             agent.full_clean()
 
     def test_missing_goal(self):
-        agent = AgentModel(
-            role="Agent",
-            backstory="Backstory"
-        )
+        agent = AgentModel(role="Agent", backstory="Backstory")
         with self.assertRaises(ValidationError):
             agent.full_clean()
 
     def test_missing_backstory(self):
-        agent = AgentModel(
-            role="Agent",
-            goal="Goal"
-        )
+        agent = AgentModel(role="Agent", goal="Goal")
         with self.assertRaises(ValidationError):
             agent.full_clean()
 
@@ -56,7 +44,7 @@ class AgentModelTests(TestCase):
             name="ToolRegistry2",
             description="Another tool registry description",
             module_path="allowed.module.path",
-            method_name="method_name"
+            method_name="method_name",
         )
         tool_2 = ToolModel.objects.create(registry=tool_registry_2)
         self.agent.tools.add(tool_2)
@@ -79,22 +67,14 @@ class AgentModelTests(TestCase):
     # Edge Case Tests
     def test_long_strings_for_role_goal_backstory(self):
         long_string = "a" * 100  # Updated to match the max_length of role field
-        agent = AgentModel.objects.create(
-            role=long_string,
-            goal=long_string,
-            backstory=long_string
-        )
+        agent = AgentModel.objects.create(role=long_string, goal=long_string, backstory=long_string)
         try:
             agent.full_clean()
         except ValidationError:
             self.fail("Agent model raised ValidationError unexpectedly!")
 
     def test_assign_empty_tools(self):
-        agent = AgentModel.objects.create(
-            role="Agent",
-            goal="Goal",
-            backstory="Backstory"
-        )
+        agent = AgentModel.objects.create(role="Agent", goal="Goal", backstory="Backstory")
         agent.tools.set([])
         self.assertEqual(agent.tools.count(), 0)
 
@@ -104,14 +84,10 @@ class AgentModelTests(TestCase):
             name="ToolRegistry2",
             description="Another tool registry description",
             module_path="allowed.module.path",
-            method_name="method_name"
+            method_name="method_name",
         )
         tool_2 = ToolModel.objects.create(registry=tool_registry_2)
-        agent = AgentModel.objects.create(
-            role="Agent",
-            goal="Goal",
-            backstory="Backstory"
-        )
+        agent = AgentModel.objects.create(role="Agent", goal="Goal", backstory="Backstory")
         agent.tools.add(tool_2)
         self.assertEqual(agent.tools.count(), 1)
         self.assertIn(tool_2, agent.tools.all())
@@ -121,7 +97,7 @@ class AgentModelTests(TestCase):
             name="ToolRegistry2",
             description="Another tool registry description",
             module_path="allowed.module.path",
-            method_name="method_name"
+            method_name="method_name",
         )
         tool_2 = ToolModel.objects.create(registry=tool_registry_2)
         self.agent.tools.add(tool_2)

@@ -1,31 +1,28 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from crew.models import TaskModel, AgentModel, ToolModel, ToolRegistryModel
+
+from crew.models import AgentModel, TaskModel, ToolModel, ToolRegistryModel
+
 
 class TaskModelTests(TestCase):
-
     def setUp(self):
         self.tool_registry = ToolRegistryModel.objects.create(
             name="ToolRegistry1",
             description="A tool registry description",
             module_path="allowed.module.path",
-            method_name="method_name"
+            method_name="method_name",
         )
         self.tool = ToolModel.objects.create(registry=self.tool_registry)
-        
-        self.agent = AgentModel.objects.create(
-            role="Agent",
-            goal="Goal",
-            backstory="Backstory"
-        )
+
+        self.agent = AgentModel.objects.create(role="Agent", goal="Goal", backstory="Backstory")
         self.agent.tools.add(self.tool)
-        
+
         self.task = TaskModel.objects.create(
             name="Task1",
             description="Task description",
             expected_output="Expected output",
             status="Pending",
-            agent=self.agent
+            agent=self.agent,
         )
         self.task.tools.add(self.tool)
 
@@ -38,31 +35,18 @@ class TaskModelTests(TestCase):
 
     def test_missing_name(self):
         task = TaskModel(
-            description="Task description",
-            expected_output="Expected output",
-            status="Pending",
-            agent=self.agent
+            description="Task description", expected_output="Expected output", status="Pending", agent=self.agent
         )
         with self.assertRaises(ValidationError):
             task.full_clean()
 
     def test_missing_description(self):
-        task = TaskModel(
-            name="Task2",
-            expected_output="Expected output",
-            status="Pending",
-            agent=self.agent
-        )
+        task = TaskModel(name="Task2", expected_output="Expected output", status="Pending", agent=self.agent)
         with self.assertRaises(ValidationError):
             task.full_clean()
 
     def test_missing_expected_output(self):
-        task = TaskModel(
-            name="Task2",
-            description="Task description",
-            status="Pending",
-            agent=self.agent
-        )
+        task = TaskModel(name="Task2", description="Task description", status="Pending", agent=self.agent)
         with self.assertRaises(ValidationError):
             task.full_clean()
 
@@ -72,7 +56,7 @@ class TaskModelTests(TestCase):
             name="ToolRegistry2",
             description="Another tool registry description",
             module_path="allowed.module.path",
-            method_name="method_name"
+            method_name="method_name",
         )
         tool_2 = ToolModel.objects.create(registry=tool_registry_2)
         self.task.tools.add(tool_2)
@@ -83,11 +67,7 @@ class TaskModelTests(TestCase):
         self.assertNotIn(self.tool, self.task.tools.all())
 
     def test_change_agent_of_task(self):
-        agent2 = AgentModel.objects.create(
-            role="Agent2",
-            goal="Goal2",
-            backstory="Backstory2"
-        )
+        agent2 = AgentModel.objects.create(role="Agent2", goal="Goal2", backstory="Backstory2")
         self.task.agent = agent2
         self.task.save()
         self.assertEqual(self.task.agent, agent2)
@@ -96,11 +76,7 @@ class TaskModelTests(TestCase):
     def test_long_strings_for_name_description_expected_output(self):
         long_string = "a" * 1000
         task = TaskModel.objects.create(
-            name="a" * 100,
-            description=long_string,
-            expected_output=long_string,
-            status="Pending",
-            agent=self.agent
+            name="a" * 100, description=long_string, expected_output=long_string, status="Pending", agent=self.agent
         )
         try:
             task.full_clean()
@@ -113,7 +89,7 @@ class TaskModelTests(TestCase):
             description="Task description",
             expected_output="Expected output",
             status="Pending",
-            agent=self.agent
+            agent=self.agent,
         )
         task.tools.set([])
         self.assertEqual(task.tools.count(), 0)
@@ -124,7 +100,7 @@ class TaskModelTests(TestCase):
             name="ToolRegistry2",
             description="Another tool registry description",
             module_path="allowed.module.path",
-            method_name="method_name"
+            method_name="method_name",
         )
         tool_2 = ToolModel.objects.create(registry=tool_registry_2)
         task = TaskModel.objects.create(
@@ -132,7 +108,7 @@ class TaskModelTests(TestCase):
             description="Task description",
             expected_output="Expected output",
             status="Pending",
-            agent=self.agent
+            agent=self.agent,
         )
         task.tools.add(tool_2)
         self.assertEqual(task.tools.count(), 1)
@@ -143,7 +119,7 @@ class TaskModelTests(TestCase):
             name="ToolRegistry2",
             description="Another tool registry description",
             module_path="allowed.module.path",
-            method_name="method_name"
+            method_name="method_name",
         )
         tool_2 = ToolModel.objects.create(registry=tool_registry_2)
         self.task.tools.add(tool_2)
