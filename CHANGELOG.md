@@ -2,6 +2,41 @@
 
 
 
+## v0.7.0 (2024-06-12)
+
+### Chore
+
+* chore: epmty folder to force branch creation ([`13fd934`](https://github.com/thompsonson/ctim/commit/13fd9349d005635c2991039e908a93f34b86ad18))
+
+### Ci
+
+* ci: running crew tests in the ci pipeline ([`694392c`](https://github.com/thompsonson/ctim/commit/694392cce5ed564c1624dc9bb21713ab96e40c86))
+
+* ci: running crew tests in the ci pipeline ([`793190a`](https://github.com/thompsonson/ctim/commit/793190ad0b503c8e16abb5d01a9fd97304f56ed5))
+
+* ci: fix code style ([`f3848d8`](https://github.com/thompsonson/ctim/commit/f3848d85fa6cc55be46bb97f4f3085412c83a7af))
+
+### Feature
+
+* feat: Add tests for TaskFactory
+
+The code changes include adding tests for the TaskFactory class in the test_factories module. These tests cover the creation of task instances, validation, relationship handling, error handling, and boundary cases. The purpose of these changes is to ensure the correctness and reliability of the TaskFactory class. ([`0e3d7cd`](https://github.com/thompsonson/ctim/commit/0e3d7cdacf80c173b0beb2f75371345a1ec0df63))
+
+* feat: Add tests for ExecutionResultModel
+
+The code changes include adding tests for the ExecutionResultModel class in the test_models module. These tests cover validation, relationships, edge cases, and integration scenarios. The purpose of these changes is to ensure the correctness and reliability of the ExecutionResultModel class. ([`3605be3`](https://github.com/thompsonson/ctim/commit/3605be3b3cc06a7e43a13c99a77f74edd8573729))
+
+### Unknown
+
+* Merge pull request #59 from Tajcore/unit_tests_tt
+
+Comprehensive Unit Tests for django-crew Models and Factories ([`7b748f8`](https://github.com/thompsonson/ctim/commit/7b748f8a0c8406bfe220a49e201b21c17adb7e6e))
+
+* Add tests for ToolFactory
+
+The code changes include adding tests for the ToolFactory class in the test_factories module. These tests cover the creation of tool instances, validation, module import, method retrieval, error handling, and boundary cases. The purpose of these changes is to ensure the correctness and reliability of the ToolFactory class. ([`75810f4`](https://github.com/thompsonson/ctim/commit/75810f46a1a97b07e9a0981995d8808feed8a431))
+
+
 ## v0.6.0 (2024-06-06)
 
 ### Chore
